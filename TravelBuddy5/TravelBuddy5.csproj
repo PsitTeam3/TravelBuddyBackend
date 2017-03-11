@@ -258,6 +258,10 @@
       <Project>{2e4ed834-4b53-4643-9aa2-fedf969a3aaf}</Project>
       <Name>TravelBuddy.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TravelBuddy5.DAL\TravelBuddy5.DAL.csproj">
+      <Project>{2b593dca-e0c8-431c-8a14-1e7939e2faa0}</Project>
+      <Name>TravelBuddy5.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
