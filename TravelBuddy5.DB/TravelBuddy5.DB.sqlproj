@@ -58,4 +58,15 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tour.sql" />
+    <Build Include="POI.sql" />
+    <Build Include="TourPOI.sql" />
+    <Build Include="UserTour.sql" />
+    <Build Include="User.sql" />
+    <Build Include="UserPOI.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TravelBuddy5.DB.refactorlog" />
+  </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@ using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TravelBuddy5;
 using TravelBuddy5.Controllers;
+using TravelBuddy5.Repositories;
 
 namespace TravelBuddy5.Tests.Controllers
 {
@@ -22,11 +23,15 @@ namespace TravelBuddy5.Tests.Controllers
             // Act
             IEnumerable<string> result = controller.Get();
 
+            //Assert
+            var number = int.Parse(result.FirstOrDefault());
+            Assert.IsTrue(number > 0 && number <= 10);
+
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("value1", result.ElementAt(0));
-            Assert.AreEqual("value2", result.ElementAt(1));
+            //Assert.IsNotNull(result);
+            //Assert.AreEqual(2, result.Count());
+            //Assert.AreEqual("value1", result.ElementAt(0));
+            //Assert.AreEqual("value2", result.ElementAt(1));
         }
 
         [TestMethod]

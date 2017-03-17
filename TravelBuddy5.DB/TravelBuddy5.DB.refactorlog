@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="0d29d7f0-43a5-405c-99f5-a09cc16423e8" ChangeDateTime="03/14/2017 17:06:48">
+    <Property Name="ElementName" Value="[dbo].[TourPOI].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TourPOI]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FK_Tour" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e68fb1ec-1f9f-45a9-8e8c-fd617c26f076" ChangeDateTime="03/14/2017 17:08:12">
+    <Property Name="ElementName" Value="[dbo].[FK_TourPOI_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[TourPOI]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_TourPOI_Tour]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="30e90955-f790-482d-b22f-92f3757d4fbc" ChangeDateTime="03/14/2017 17:28:52">
+    <Property Name="ElementName" Value="[dbo].[TourPOI].[Index]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TourPOI]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Order" />
+  </Operation>
+</Operations>
