@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UserTour]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [FK_Tour] INT NOT NULL,
 	[FK_User] INT NOT NULL,
     [StartDate] DATETIME NOT NULL, 

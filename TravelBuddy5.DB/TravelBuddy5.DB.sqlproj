@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{1a7adbd8-03cb-4ecf-b8a9-06ef55d4847d}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -65,8 +65,13 @@
     <Build Include="UserTour.sql" />
     <Build Include="User.sql" />
     <Build Include="UserPOI.sql" />
+    <Build Include="City.sql" />
+    <Build Include="Country.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TravelBuddy5.DB.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TravelBuddy5.DB.publish.xml" />
   </ItemGroup>
 </Project>
