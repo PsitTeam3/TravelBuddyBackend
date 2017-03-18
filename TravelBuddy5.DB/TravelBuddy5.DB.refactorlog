@@ -21,4 +21,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Order" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5f228893-97e2-4edb-bca1-50111e7d0282" ChangeDateTime="03/18/2017 10:58:11">
+    <Property Name="ElementName" Value="[dbo].[FK_Tour_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Tour]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Tour_ToCity]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4955c344-b78a-49a2-b95a-27bf01e82acb" ChangeDateTime="03/18/2017 11:32:33">
+    <Property Name="ElementName" Value="[dbo].[Tour].[Country]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tour]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FK_Country" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="68e1fc3e-095f-4336-8357-b2877251891c" ChangeDateTime="03/18/2017 12:58:53">
+    <Property Name="ElementName" Value="[dbo].[Country].[Country]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Country]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fc986a75-5380-4e45-95a3-f8793f47c3d7" ChangeDateTime="03/18/2017 12:59:14">
+    <Property Name="ElementName" Value="[dbo].[City].[City]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[City]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
 </Operations>
