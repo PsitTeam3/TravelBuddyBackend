@@ -15,19 +15,27 @@ namespace TravelBuddy5.Controllers
 {
     public class ToursController : ApiController
     {
-        private TravelBuddyEntities db = new TravelBuddyEntities();
+
+        ITourRepo _repo = null;
+        TravelBuddyEntities _db = null;
+
+        public ToursController(ITourRepo tourRepo)
+        {
+            _repo = tourRepo;
+            _db = _repo.DB;
+        }
 
         // GET: api/Tours
         public IQueryable<Tour> GetTour()
         {
-            return db.Tour;
+            return _db.Tour;
         }
 
         // GET: api/Tours/5
         [ResponseType(typeof(Tour))]
         public async Task<IHttpActionResult> GetTour(int id)
         {
-            Tour tour = await db.Tour.FindAsync(id);
+            Tour tour = await _db.Tour.FindAsync(id);
             if (tour == null)
             {
                 return NotFound();
@@ -50,11 +58,11 @@ namespace TravelBuddy5.Controllers
                 return BadRequest();
             }
 
-            db.Entry(tour).State = EntityState.Modified;
+            _db.Entry(tour).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,11 +88,11 @@ namespace TravelBuddy5.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Tour.Add(tour);
+            _db.Tour.Add(tour);
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -105,30 +113,30 @@ namespace TravelBuddy5.Controllers
         [ResponseType(typeof(Tour))]
         public async Task<IHttpActionResult> DeleteTour(int id)
         {
-            Tour tour = await db.Tour.FindAsync(id);
+            Tour tour = await _db.Tour.FindAsync(id);
             if (tour == null)
             {
                 return NotFound();
             }
 
-            db.Tour.Remove(tour);
-            await db.SaveChangesAsync();
+            _db.Tour.Remove(tour);
+            await _db.SaveChangesAsync();
 
             return Ok(tour);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        _db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         private bool TourExists(int id)
         {
-            return db.Tour.Any(e => e.Id == id);
+            return _db.Tour.Any(e => e.Id == id);
         }
     }
 }
