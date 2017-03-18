@@ -23,19 +23,6 @@ namespace TravelBuddy5.Controllers
             return db.Country;
         }
 
-        // GET: api/Countries/5
-        [ResponseType(typeof(Country))]
-        public async Task<IHttpActionResult> GetCountry(int id)
-        {
-            Country country = await db.Country.FindAsync(id);
-            if (country == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(country);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

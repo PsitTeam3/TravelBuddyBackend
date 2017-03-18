@@ -75,9 +75,7 @@ namespace TravelBuddy5.Controllers
             db.TourPOI.Add(tourPoi1);
             db.TourPOI.Add(tourPoi2);
             db.TourPOI.Add(tourPoi3);
-            zurichTour.TourPOI.Add(tourPoi1);
-            zurichTour.TourPOI.Add(tourPoi2);
-            zurichTour.TourPOI.Add(tourPoi3);
+            
             db.Tour.Add(zurichTour);
         }
     }
