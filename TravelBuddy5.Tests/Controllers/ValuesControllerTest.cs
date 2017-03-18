@@ -7,7 +7,6 @@ using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TravelBuddy5;
 using TravelBuddy5.Controllers;
-using TravelBuddy5.Repositories;
 
 namespace TravelBuddy5.Tests.Controllers
 {

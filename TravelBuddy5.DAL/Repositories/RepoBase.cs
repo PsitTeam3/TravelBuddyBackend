@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TravelBuddy5.DAL;
 
-namespace TravelBuddy5.Models
+namespace TravelBuddy5.DAL.Repositories
 {
-    public class RepoBase
+    public class RepoBase : IDisposable
     {
 
         private TravelBuddyEntities _db;
@@ -22,13 +17,10 @@ namespace TravelBuddy5.Models
             _db = new TravelBuddyEntities();
         }
 
-
-        ~RepoBase()
+        public void Dispose()
         {
             _db.SaveChanges();
             _db.Dispose();
-
         }
-
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TravelBuddy5.DAL;
 
-namespace TravelBuddy5.Repositories
+namespace TravelBuddy5.DAL.Repositories
 {
     public class TestRepo:ITestRepo
     {

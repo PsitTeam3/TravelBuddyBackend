@@ -24,12 +24,10 @@ namespace TravelBuddy5.DAL
         public string Name { get; set; }
         public string Description { get; set; }
         public string DetailDescription { get; set; }
-        public int FK_Country { get; set; }
         public int FK_City { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TourPOI> TourPOI { get; set; }
         public virtual City City { get; set; }
-        public virtual Country Country { get; set; }
     }
 }

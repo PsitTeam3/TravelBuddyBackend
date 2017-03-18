@@ -1,41 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using System.Web.Http;
-using System.Web.Http.Description;
 using TravelBuddy5.DAL;
+using TravelBuddy5.DAL.Repositories;
+using TravelBuddy5.Models;
 
 namespace TravelBuddy5.Controllers
 {
     public class ToursController : ApiController
     {
-
-        ITourRepo _repo = null;
-        TravelBuddyEntities _db = null;
+        private readonly ITourRepo _repo;
 
         public ToursController(ITourRepo tourRepo)
         {
             _repo = tourRepo;
-            _db = _repo.DB;
+        }
+
+        public IQueryable<TourDTO> GetTours()
+        {
+            return _repo.GetTours().Select(CreateTourDTO());
         }
 
         // GET: api/Tours
-        public IQueryable<Tour> GetTour()
+        public IQueryable<TourDTO> GetToursByCity(int id)
         {
-            return _db.Tour;
+            return _repo.GetToursByCity(id).Include(tour => tour.City).Include(tour => tour.City.Country).Select(CreateTourDTO());
+        }
+
+        private Expression<Func<Tour, TourDTO>> CreateTourDTO()
+        {
+            return tour => new TourDTO
+            {
+                Id = tour.Id,
+                Name = tour.Name,
+                City = tour.City.Name,
+                Country = tour.City.Country.Name,
+                Description = tour.Description,
+                DetailDescription = tour.Description
+            };
         }
 
         // GET: api/Tours/5
-        [ResponseType(typeof(Tour))]
+       /* [ResponseType(typeof(Tour))]
         public async Task<IHttpActionResult> GetTour(int id)
         {
-            Tour tour = await _db.Tour.FindAsync(id);
+            Tour tour = await _repo.GetToursByCity(id);
             if (tour == null)
             {
                 return NotFound();
@@ -58,11 +69,11 @@ namespace TravelBuddy5.Controllers
                 return BadRequest();
             }
 
-            _db.Entry(tour).State = EntityState.Modified;
+            //_db.Entry(tour).State = EntityState.Modified;
 
             try
             {
-                await _db.SaveChangesAsync();
+               // await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -124,7 +135,7 @@ namespace TravelBuddy5.Controllers
 
             return Ok(tour);
         }
-
+        *
         //protected override void Dispose(bool disposing)
         //{
         //    if (disposing)
@@ -138,5 +149,6 @@ namespace TravelBuddy5.Controllers
         {
             return _db.Tour.Any(e => e.Id == id);
         }
+        */
     }
 }

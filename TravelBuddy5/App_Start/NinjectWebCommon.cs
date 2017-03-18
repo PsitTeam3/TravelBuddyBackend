@@ -1,3 +1,5 @@
+using TravelBuddy5.DAL.Repositories;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TravelBuddy5.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(TravelBuddy5.App_Start.NinjectWebCommon), "Stop")]
 
@@ -12,7 +14,6 @@ namespace TravelBuddy5.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using Repositories;
     using Models;
     public static class NinjectWebCommon 
     {
@@ -70,7 +71,8 @@ namespace TravelBuddy5.App_Start
 
             kernel.Bind<ITestRepo>().To<TestRepo>();
             kernel.Bind<ITourRepo>().To<TourRepo>();
-
+            kernel.Bind<ICityRepo>().To<CityRepo>();
+            kernel.Bind<ICountryRepo>().To<CountryRepo>();
         }        
     }
 }

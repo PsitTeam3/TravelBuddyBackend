@@ -1,35 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Description;
-using TravelBuddy5.DAL;
+using TravelBuddy5.DAL.Repositories;
+using TravelBuddy5.Models;
 
 namespace TravelBuddy5.Controllers
 {
     public class CountriesController : ApiController
     {
-        private TravelBuddyEntities db = new TravelBuddyEntities();
+        private readonly ICountryRepo _countryRepo;
 
-        // GET: api/Countries
-        public IQueryable<Country> GetCountry()
+        public CountriesController(ICountryRepo countryRepo)
         {
-            return db.Country;
+            _countryRepo = countryRepo;
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: api/Countries
+        public IQueryable<CountryDTO> GetCountry()
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return _countryRepo.GetCountries().Select(country => new CountryDTO {Id = country.Id, Name = country.Name});
         }
     }
 }

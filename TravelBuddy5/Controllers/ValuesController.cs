@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using TravelBuddy5.DAL;
-using TravelBuddy5.Repositories;
+using TravelBuddy5.DAL.Repositories;
 
 namespace TravelBuddy5.Controllers
 {

@@ -36,7 +36,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="FK_Country" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="DetailDescription" Type="text" Nullable="false" />
           <Property Name="FK_City" Type="int" Nullable="false" />
@@ -71,18 +70,6 @@
             </Principal>
             <Dependent Role="Tour">
               <PropertyRef Name="FK_City" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tour_Country">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tour">
-              <PropertyRef Name="FK_Country" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -124,10 +111,6 @@
             <End Role="City" EntitySet="City" />
             <End Role="Tour" EntitySet="Tour" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tour_Country" Association="Self.FK_Tour_Country">
-            <End Role="Country" EntitySet="Country" />
-            <End Role="Tour" EntitySet="Tour" />
-          </AssociationSet>
           <AssociationSet Name="FK_TourPOI_POI" Association="Self.FK_TourPOI_POI">
             <End Role="POI" EntitySet="POI" />
             <End Role="TourPOI" EntitySet="TourPOI" />
@@ -161,10 +144,8 @@
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TourPOI" Relationship="Self.FK_TourPOI_Tour" FromRole="Tour" ToRole="TourPOI" />
-          <Property Name="FK_Country" Nullable="false" Type="Int32" />
           <Property Name="FK_City" Nullable="false" Type="Int32" />
           <NavigationProperty Name="City" Relationship="TravelBuddyModel.FK_Tour_ToCity" FromRole="Tour" ToRole="City" />
-          <NavigationProperty Name="Country" Relationship="TravelBuddyModel.FK_Tour_ToCountry" FromRole="Tour" ToRole="Country" />
         </EntityType>
         <EntityType Name="TourPOI">
           <Key>
@@ -219,10 +200,6 @@
             <End Role="City" EntitySet="City" />
             <End Role="Tour" EntitySet="Tour" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tour_ToCountry" Association="TravelBuddyModel.FK_Tour_ToCountry">
-            <End Role="Country" EntitySet="Country" />
-            <End Role="Tour" EntitySet="Tour" />
-          </AssociationSet>
           <AssociationSet Name="FK_City_Country" Association="TravelBuddyModel.FK_City_Country">
             <End Role="Country" EntitySet="Country" />
             <End Role="City" EntitySet="City" />
@@ -243,7 +220,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tour" Relationship="TravelBuddyModel.FK_Tour_ToCountry" FromRole="Country" ToRole="Tour" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="City" Relationship="TravelBuddyModel.FK_City_Country" FromRole="Country" ToRole="City" />
         </EntityType>
@@ -256,18 +232,6 @@
             </Principal>
             <Dependent Role="Tour">
               <PropertyRef Name="FK_City" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tour_ToCountry">
-          <End Type="TravelBuddyModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="TravelBuddyModel.Tour" Role="Tour" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tour">
-              <PropertyRef Name="FK_Country" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -304,7 +268,6 @@
             <EntityTypeMapping TypeName="TravelBuddyModel.Tour">
               <MappingFragment StoreEntitySet="Tour">
                 <ScalarProperty Name="FK_City" ColumnName="FK_City" />
-                <ScalarProperty Name="FK_Country" ColumnName="FK_Country" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
