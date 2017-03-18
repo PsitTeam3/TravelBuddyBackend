@@ -58,6 +58,7 @@
       <DependentUpon>ToursDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ITestRepo.cs" />
+    <Compile Include="ITourRepo.cs" />
     <Compile Include="POI.cs">
       <DependentUpon>ToursDataModel.tt</DependentUpon>
     </Compile>
