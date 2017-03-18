@@ -38,7 +38,7 @@ namespace TravelBuddy5.Controllers
                 City = tour.City.Name,
                 Country = tour.City.Country.Name,
                 Description = tour.Description,
-                DetailDescription = tour.Description
+                DetailDescription = tour.DetailDescription
             };
         }
 
