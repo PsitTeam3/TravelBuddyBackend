@@ -201,7 +201,10 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\CreateSampleDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\POIsController.cs" />
     <Compile Include="Controllers\ToursController.cs" />
+    <Compile Include="Controllers\UserPOIController.cs" />
+    <Compile Include="Controllers\UserTourController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

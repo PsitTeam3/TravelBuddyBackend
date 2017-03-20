@@ -1,4 +1,4 @@
-﻿namespace TravelBuddy5.DAL.Repositories
+﻿namespace TravelBuddy5.DAL.Interfaces
 {
     public interface ITestRepo
     {

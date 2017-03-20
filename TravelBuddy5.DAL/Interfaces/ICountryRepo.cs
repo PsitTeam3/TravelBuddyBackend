@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace TravelBuddy5.DAL.Repositories
+namespace TravelBuddy5.DAL.Interfaces
 {
     public interface ICountryRepo
     {

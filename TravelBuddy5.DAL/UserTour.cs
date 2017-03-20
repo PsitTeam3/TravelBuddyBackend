@@ -12,25 +12,23 @@ namespace TravelBuddy5.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Tour
+    public partial class UserTour
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tour()
+        public UserTour()
         {
-            this.TourPOI = new HashSet<TourPOI>();
-            this.UserTour = new HashSet<UserTour>();
+            this.UserPOI = new HashSet<UserPOI>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string DetailDescription { get; set; }
-        public int FK_City { get; set; }
+        public int FK_Tour { get; set; }
+        public int FK_User { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
     
+        public virtual Tour Tour { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TourPOI> TourPOI { get; set; }
-        public virtual City City { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserTour> UserTour { get; set; }
+        public virtual ICollection<UserPOI> UserPOI { get; set; }
     }
 }

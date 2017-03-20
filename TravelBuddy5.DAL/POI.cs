@@ -18,6 +18,7 @@ namespace TravelBuddy5.DAL
         public POI()
         {
             this.TourPOI = new HashSet<TourPOI>();
+            this.UserPOI = new HashSet<UserPOI>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace TravelBuddy5.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TourPOI> TourPOI { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserPOI> UserPOI { get; set; }
     }
 }

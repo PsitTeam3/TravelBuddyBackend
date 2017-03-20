@@ -15,6 +15,7 @@ namespace TravelBuddy5.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Models;
+    using DAL.Interfaces;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -73,6 +74,9 @@ namespace TravelBuddy5.App_Start
             kernel.Bind<ITourRepo>().To<TourRepo>();
             kernel.Bind<ICityRepo>().To<CityRepo>();
             kernel.Bind<ICountryRepo>().To<CountryRepo>();
+            kernel.Bind<IPOIRepo>().To<POIRepo>();
+            kernel.Bind<IUserTourRepo>().To<UserTourRepo>();
+            kernel.Bind<IUserPOIRepo>().To<UserPOIRepo>();
         }        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using TravelBuddy5.DAL.Interfaces;
 
 namespace TravelBuddy5.DAL.Repositories
 {

@@ -49,6 +49,34 @@
           <Property Name="FK_POI" Type="int" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Lastname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserPOI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_POI" Type="int" Nullable="false" />
+          <Property Name="FK_UserTour" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTour">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Tour" Type="int" Nullable="false" />
+          <Property Name="FK_User" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
         <Association Name="FK_City_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
           <End Role="City" Type="Self.City" Multiplicity="*" />
@@ -97,12 +125,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserPOI_POI">
+          <End Role="POI" Type="Self.POI" Multiplicity="1" />
+          <End Role="UserPOI" Type="Self.UserPOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POI">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPOI">
+              <PropertyRef Name="FK_POI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPOI_UserTour">
+          <End Role="UserTour" Type="Self.UserTour" Multiplicity="1" />
+          <End Role="UserPOI" Type="Self.UserPOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTour">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPOI">
+              <PropertyRef Name="FK_UserTour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTour_Tour">
+          <End Role="Tour" Type="Self.Tour" Multiplicity="1" />
+          <End Role="UserTour" Type="Self.UserTour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTour">
+              <PropertyRef Name="FK_Tour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTour_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserTour" Type="Self.UserTour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTour">
+              <PropertyRef Name="FK_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TravelBuddyModelStoreContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POI" EntityType="Self.POI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tour" EntityType="Self.Tour" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TourPOI" EntityType="Self.TourPOI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPOI" EntityType="Self.UserPOI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTour" EntityType="Self.UserTour" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_City_Country" Association="Self.FK_City_Country">
             <End Role="Country" EntitySet="Country" />
             <End Role="City" EntitySet="City" />
@@ -119,6 +198,22 @@
             <End Role="Tour" EntitySet="Tour" />
             <End Role="TourPOI" EntitySet="TourPOI" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserPOI_POI" Association="Self.FK_UserPOI_POI">
+            <End Role="POI" EntitySet="POI" />
+            <End Role="UserPOI" EntitySet="UserPOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPOI_UserTour" Association="Self.FK_UserPOI_UserTour">
+            <End Role="UserTour" EntitySet="UserTour" />
+            <End Role="UserPOI" EntitySet="UserPOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTour_Tour" Association="Self.FK_UserTour_Tour">
+            <End Role="Tour" EntitySet="Tour" />
+            <End Role="UserTour" EntitySet="UserTour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTour_User" Association="Self.FK_UserTour_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserTour" EntitySet="UserTour" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -134,6 +229,7 @@
           <Property Name="Coordinates" Type="Geography" />
           <Property Name="VisitDuration" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TourPOI" Relationship="Self.FK_TourPOI_POI" FromRole="POI" ToRole="TourPOI" />
+          <NavigationProperty Name="UserPOI" Relationship="TravelBuddyModel.FK_UserPOI_POI" FromRole="POI" ToRole="UserPOI" />
         </EntityType>
         <EntityType Name="Tour">
           <Key>
@@ -146,6 +242,7 @@
           <NavigationProperty Name="TourPOI" Relationship="Self.FK_TourPOI_Tour" FromRole="Tour" ToRole="TourPOI" />
           <Property Name="FK_City" Nullable="false" Type="Int32" />
           <NavigationProperty Name="City" Relationship="TravelBuddyModel.FK_Tour_ToCity" FromRole="Tour" ToRole="City" />
+          <NavigationProperty Name="UserTour" Relationship="TravelBuddyModel.FK_UserTour_Tour" FromRole="Tour" ToRole="UserTour" />
         </EntityType>
         <EntityType Name="TourPOI">
           <Key>
@@ -204,6 +301,25 @@
             <End Role="Country" EntitySet="Country" />
             <End Role="City" EntitySet="City" />
           </AssociationSet>
+          <EntitySet Name="User" EntityType="TravelBuddyModel.User" />
+          <EntitySet Name="UserPOI" EntityType="TravelBuddyModel.UserPOI" />
+          <EntitySet Name="UserTour" EntityType="TravelBuddyModel.UserTour" />
+          <AssociationSet Name="FK_UserPOI_POI" Association="TravelBuddyModel.FK_UserPOI_POI">
+            <End Role="POI" EntitySet="POI" />
+            <End Role="UserPOI" EntitySet="UserPOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTour_Tour" Association="TravelBuddyModel.FK_UserTour_Tour">
+            <End Role="Tour" EntitySet="Tour" />
+            <End Role="UserTour" EntitySet="UserTour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTour_User" Association="TravelBuddyModel.FK_UserTour_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserTour" EntitySet="UserTour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPOI_UserTour" Association="TravelBuddyModel.FK_UserPOI_UserTour">
+            <End Role="UserTour" EntitySet="UserTour" />
+            <End Role="UserPOI" EntitySet="UserPOI" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="City">
           <Key>
@@ -244,6 +360,88 @@
             </Principal>
             <Dependent Role="City">
               <PropertyRef Name="FK_Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserTour" Relationship="TravelBuddyModel.FK_UserTour_User" FromRole="User" ToRole="UserTour" />
+        </EntityType>
+        <EntityType Name="UserPOI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_POI" Type="Int32" Nullable="false" />
+          <Property Name="FK_UserTour" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="POI" Relationship="TravelBuddyModel.FK_UserPOI_POI" FromRole="UserPOI" ToRole="POI" />
+          <NavigationProperty Name="UserTour" Relationship="TravelBuddyModel.FK_UserPOI_UserTour" FromRole="UserPOI" ToRole="UserTour" />
+        </EntityType>
+        <EntityType Name="UserTour">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Tour" Type="Int32" Nullable="false" />
+          <Property Name="FK_User" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tour" Relationship="TravelBuddyModel.FK_UserTour_Tour" FromRole="UserTour" ToRole="Tour" />
+          <NavigationProperty Name="User" Relationship="TravelBuddyModel.FK_UserTour_User" FromRole="UserTour" ToRole="User" />
+          <NavigationProperty Name="UserPOI" Relationship="TravelBuddyModel.FK_UserPOI_UserTour" FromRole="UserTour" ToRole="UserPOI" />
+        </EntityType>
+        <Association Name="FK_UserPOI_POI">
+          <End Type="TravelBuddyModel.POI" Role="POI" Multiplicity="1" />
+          <End Type="TravelBuddyModel.UserPOI" Role="UserPOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POI">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPOI">
+              <PropertyRef Name="FK_POI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTour_Tour">
+          <End Type="TravelBuddyModel.Tour" Role="Tour" Multiplicity="1" />
+          <End Type="TravelBuddyModel.UserTour" Role="UserTour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTour">
+              <PropertyRef Name="FK_Tour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTour_User">
+          <End Type="TravelBuddyModel.User" Role="User" Multiplicity="1" />
+          <End Type="TravelBuddyModel.UserTour" Role="UserTour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTour">
+              <PropertyRef Name="FK_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPOI_UserTour">
+          <End Type="TravelBuddyModel.UserTour" Role="UserTour" Multiplicity="1" />
+          <End Type="TravelBuddyModel.UserPOI" Role="UserPOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTour">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPOI">
+              <PropertyRef Name="FK_UserTour" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -297,6 +495,37 @@
             <EntityTypeMapping TypeName="TravelBuddyModel.Country">
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="TravelBuddyModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPOI">
+            <EntityTypeMapping TypeName="TravelBuddyModel.UserPOI">
+              <MappingFragment StoreEntitySet="UserPOI">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="FK_UserTour" ColumnName="FK_UserTour" />
+                <ScalarProperty Name="FK_POI" ColumnName="FK_POI" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTour">
+            <EntityTypeMapping TypeName="TravelBuddyModel.UserTour">
+              <MappingFragment StoreEntitySet="UserTour">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="FK_User" ColumnName="FK_User" />
+                <ScalarProperty Name="FK_Tour" ColumnName="FK_Tour" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

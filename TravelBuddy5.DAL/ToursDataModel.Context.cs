@@ -30,5 +30,8 @@ namespace TravelBuddy5.DAL
         public virtual DbSet<TourPOI> TourPOI { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Country> Country { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserPOI> UserPOI { get; set; }
+        public virtual DbSet<UserTour> UserTour { get; set; }
     }
 }
