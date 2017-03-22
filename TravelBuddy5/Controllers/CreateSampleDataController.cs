@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using TravelBuddy.DAL;
 using TravelBuddy5.DAL;
 
 namespace TravelBuddy5.Controllers
@@ -74,6 +75,7 @@ namespace TravelBuddy5.Controllers
                 Name = "Fraumünster Church",
                 Description = "Old church, beautiful, has a tower to go up.",
                 VisitDuration = (int) TimeSpan.FromMinutes(40).TotalSeconds,
+                Coordinates = CoordinatesHelper.CreatePoint(47.369741, 8.541631),
             };
             db.POI.Add(_fraumuenster);
 
@@ -81,7 +83,8 @@ namespace TravelBuddy5.Controllers
             {
                 Name = "Lake of Zürich",
                 Description = "The lake of Zürich is a nice place for having a swim during summer time",
-                VisitDuration = (int) TimeSpan.FromMinutes(60).TotalSeconds
+                VisitDuration = (int) TimeSpan.FromMinutes(60).TotalSeconds,
+                Coordinates = CoordinatesHelper.CreatePoint(47.366202,8.541840),
             };
             db.POI.Add(_lakeOfZurich);
 
@@ -98,7 +101,9 @@ namespace TravelBuddy5.Controllers
                 Name = "Üetliberg",
                 Description =
                     "Walk up the house mountain of Zürich and enjoy the view over Zürich and perhaps the alps as well.",
-                VisitDuration = (int) TimeSpan.FromMinutes(240).TotalSeconds
+                VisitDuration = (int) TimeSpan.FromMinutes(240).TotalSeconds,
+                Coordinates = CoordinatesHelper.CreatePoint(47.351703, 8.492508),
+
             };
             db.POI.Add(_uetliberg);
 

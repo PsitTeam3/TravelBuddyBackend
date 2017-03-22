@@ -18,9 +18,36 @@ namespace TravelBuddy5.Controllers
             _repo = userPOIRepo;
         }
 
-        public void CheckPOI(int poiID, int tourID)
+        [HttpGet]
+        [Route("api/UserPOI/CheckPOI")]
+        public HttpResponseMessage CheckPOI(int poiID, int userTourID)
         {
-            _repo.CheckPOI(poiID, tourID);
+            try
+            { 
+                _repo.CheckPOI(poiID, userTourID);
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.Conflict, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        [Route("api/UserPOI/CheckPOI")]
+        public HttpResponseMessage CheckPOI(int poiID, int tourID, int userID)
+        {
+            try
+            {
+                _repo.CheckPOI(poiID, tourID, userID);
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.Conflict, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

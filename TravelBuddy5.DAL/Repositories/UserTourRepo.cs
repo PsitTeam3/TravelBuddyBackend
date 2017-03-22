@@ -12,7 +12,7 @@ namespace TravelBuddy5.DAL.Repositories
 
         public void StartUserTour(int userID, int tourID)
         {
-            if(DB.UserTour.Where(ut => ut.FK_Tour == tourID && ut.FK_User == tourID).Count() > 0)
+            if(DB.UserTour.Where(ut => ut.FK_Tour == tourID && ut.FK_User == userID).Count() > 0)
             {
                 throw new Exception("User has already started this tour");
             }

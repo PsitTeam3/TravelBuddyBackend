@@ -19,14 +19,36 @@ namespace TravelBuddy5.Controllers
             _repo = tourRepo;
         }
 
-        public void StartUserTour(int userID, int tourID)
+        [HttpGet]
+        [Route("api/UserTour/StartUserTour")]
+        public HttpResponseMessage StartUserTour(int userID, int tourID)
         {
-            _repo.StartUserTour(userID, tourID);
+            try
+            {
+                _repo.StartUserTour(userID, tourID);
+            }
+            catch(Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.Forbidden, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        public void EndUserTour(int userID, int tourID)
+        [HttpGet]
+        [Route("api/UserTour/EndUserTour")]
+        public HttpResponseMessage EndUserTour(int userID, int tourID)
         {
-            _repo.EndUserTour(userID, tourID);
+            try
+            {
+                _repo.EndUserTour(userID, tourID);
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.NotFound, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="City.cs">
       <DependentUpon>ToursDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CoordinatesHelper.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>ToursDataModel.tt</DependentUpon>
     </Compile>
@@ -134,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TravelBuddy.Common\TravelBuddy.Common.csproj">
+      <Project>{2e4ed834-4b53-4643-9aa2-fedf969a3aaf}</Project>
+      <Name>TravelBuddy.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

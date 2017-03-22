@@ -7,18 +7,25 @@ using TravelBuddy5.DAL.Interfaces;
 
 namespace TravelBuddy5.DAL.Repositories
 {
-    public class UserPOIRepo: RepoBase, IUserPOIRepo
+    public class UserPOIRepo : RepoBase, IUserPOIRepo
     {
 
-        public void CheckPOI(int poiID, int tourID)
+        public void CheckPOI(int poiID, int userTourID)
         {
-            //Create UserPOI Entry
+            //TODO: Check if POI belongs to tour
+            if(DB.UserPOI.Where(up => up.FK_POI == poiID && up.FK_UserTour == userTourID).Count()>0)
+            {
+                throw new Exception("POI already checked");
+            }
 
-            var userTourRepo = new UserTourRepo();
-            var userTour = userTourRepo.GetUserTour(tourID, poiID);
-            DB.UserPOI.Add(new UserPOI() { Date = DateTime.Now, FK_POI = poiID, FK_UserTour = userTour.Id });
+            DB.UserPOI.Add(new UserPOI() { Date = DateTime.Now, FK_POI = poiID, FK_UserTour = userTourID });
         }
 
-
+        public void CheckPOI(int poiID, int tourID, int userID)
+        {
+            var userTourRepo = new UserTourRepo();
+            var userTour = userTourRepo.GetUserTour(tourID, userID);
+            CheckPOI(poiID, userTour.Id);
+        }
     }
 }

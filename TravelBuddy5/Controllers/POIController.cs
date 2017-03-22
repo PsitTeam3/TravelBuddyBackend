@@ -12,12 +12,12 @@ using TravelBuddy5.Models;
 
 namespace TravelBuddy5.Controllers
 {
-    public class POIsController : ApiController
+    public class POIController : ApiController
     {
 
         private readonly IPOIRepo _repo;
 
-        public POIsController(IPOIRepo poiRepo)
+        public POIController(IPOIRepo poiRepo)
         {
             _repo = poiRepo;
         }
