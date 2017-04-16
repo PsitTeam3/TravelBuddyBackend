@@ -15,5 +15,15 @@ namespace TravelBuddy.DAL
             return DbGeography.PointFromText(wkt, srid);
         }
 
+        public static string ToString(double lat, double lon)
+        {
+            return string.Format("{0},{1}", lat, lon);
+        }
+
+        public static string ToString(DbGeography geo)
+        {
+            return ToString(geo.Latitude.Value, geo.Longitude.Value);
+        }
+
     }
 }

@@ -26,7 +26,9 @@ namespace TravelBuddy5.DAL.Repositories
             return DB.POI.FirstOrDefault(p => p.Id == poiID).Coordinates.Distance(CoordinatesHelper.CreatePoint(latitude, longitude)).Value;
         }
 
- 
-
+        public POI GetPOI(int poiID)
+        {
+            return DB.POI.FirstOrDefault(p => p.Id == poiID);
+        }
     }
 }

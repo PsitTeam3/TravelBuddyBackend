@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelBuddy5.DAL.Interfaces;
+using TravelBuddy5.DAL.Repositories;
 
 namespace TravelBuddy5.DAL.Repositories
 {
@@ -48,22 +49,20 @@ namespace TravelBuddy5.DAL.Repositories
            
         }
 
-        public UserTour GetUserTour(int userTour)
+        public RepoObject<UserTour> GetUserTour(int userTour)
         {
-            return DB.UserTour.FirstOrDefault(ut => ut.Id == userTour);
+            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.Id == userTour));
         }
 
 
-        public UserTour GetUserTour(int tourID, int userID)
+        public RepoObject<UserTour> GetUserTour(int tourID, int userID)
         {
-            var userTour = DB.UserTour.FirstOrDefault(ut => ut.FK_Tour == tourID && ut.FK_User == userID);
-
-            return userTour;
+            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.FK_Tour == tourID && ut.FK_User == userID));
         }
 
-        public UserTour GetActiveTour(int userID)
+        public RepoObject<UserTour> GetActiveTour(int userID)
         {
-            return DB.UserTour.FirstOrDefault(ut => ut.EndDate == null);
+            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.EndDate == null));
         }
     }
 }

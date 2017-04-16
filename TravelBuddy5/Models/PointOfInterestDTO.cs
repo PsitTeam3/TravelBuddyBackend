@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
+using TravelBuddy5.DAL;
 
 namespace TravelBuddy5.Models
 {
@@ -9,5 +11,6 @@ namespace TravelBuddy5.Models
         public int VisitDuration { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+
     }
 }

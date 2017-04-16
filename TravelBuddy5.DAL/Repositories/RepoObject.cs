@@ -9,10 +9,16 @@ namespace TravelBuddy5.DAL.Repositories
     public class RepoObject<T>
     {
 
-        public T Value { get;}
+        public IQueryable<T> Value { get;}
         public string Message {get; }
 
-        public RepoObject(T value, string message)
+        public RepoObject(IQueryable<T> value)
+        {
+            Value = value;
+            Message = string.Empty;
+        }
+
+        public RepoObject(IQueryable<T> value, string message)
         {
             Value = value;
             Message = message;

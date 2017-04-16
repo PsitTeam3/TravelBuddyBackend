@@ -1,10 +1,13 @@
-﻿using System;
+﻿using GoogleMapsApi.Entities.Directions.Request;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
+using TravelBuddy5.Models;
 
 namespace TravelBuddy5.Controllers
 {
@@ -54,35 +57,18 @@ namespace TravelBuddy5.Controllers
         [Route("api/UserPOI/GetNextPOI")]
         public HttpResponseMessage GetNextPOI(int userTourID)
         {
-            try
+
+            var nextPOI = _repo.GetNextPOI(userTourID);
+            if(nextPOI.Value == null)
             {
-                _repo.GetNextPOI(userTourID);
+                HttpError err = new HttpError(nextPOI.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, err);
             }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, err);
-            }
+
+            var res = nextPOI.Value.Select(POIMapper.CreatePOIDTO());
             return Request.CreateResponse(HttpStatusCode.OK);
+
         }
-
-        [HttpGet]
-        [Route("api/UserPOI/GetRouteToNextPOI")]
-        public HttpResponseMessage GetRouteToNextPOI(int longitude, int latitude, int poiID)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, err);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
-
-
 
     }
 }

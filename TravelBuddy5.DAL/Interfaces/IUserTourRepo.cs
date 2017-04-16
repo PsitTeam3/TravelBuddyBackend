@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelBuddy5.DAL.Repositories;
 
 namespace TravelBuddy5.DAL.Interfaces
 {
@@ -11,7 +12,7 @@ namespace TravelBuddy5.DAL.Interfaces
 
         void StartUserTour(int userID, int tourID);
         void EndUserTour(int userID, int tourID);
-        UserTour GetUserTour(int tourID, int userID);
-        UserTour GetActiveTour(int userID);
+        RepoObject<UserTour> GetUserTour(int tourID, int userID);
+        RepoObject<UserTour> GetActiveTour(int userID);
     }
 }
