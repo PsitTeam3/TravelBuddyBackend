@@ -22,21 +22,31 @@ namespace TravelBuddy5.Controllers
             _repo = poiRepo;
         }
 
+        [HttpGet]
+        [Route("api/POI/GetPOIs")]
         public IQueryable<PointOfInterestDTO> GetPOIs()
         {
+            
             return _repo.GetPOIs().Select(CreatePOIDTO());
+
         }
 
+        [HttpGet]
+        [Route("api/POI/GetPOIsByTour")]
         public IQueryable<PointOfInterestDTO> GetPOIsByTour(int id)
         {
             return _repo.GetPOIsByTour(id).Select(CreatePOIDTO());
         }
 
+        [HttpGet]
+        [Route("api/POI/GetDistanceToPOI")]
         public double GetDistanceToPOI(int poiID, double longitude, double latitude)
         {
             return _repo.GetPOIDistance(poiID, longitude, latitude);
         }
 
+        [HttpGet]
+        [Route("api/POI/IsPOIInRange")]
         public bool IsPOIInRange(int poiID, double longitude, double latitude, float allowedDistance = 3)
         {
             return GetDistanceToPOI(poiID, longitude, latitude) <= allowedDistance;
@@ -49,7 +59,7 @@ namespace TravelBuddy5.Controllers
                 Id = poi.Id,
                 Longitude = poi.Coordinates.Longitude.Value,
                 Latitude = poi.Coordinates.Latitude.Value,
-                VisitDuration = new TimeSpan(0, poi.VisitDuration, 0)
+                VisitDuration = poi.VisitDuration
             };
         }
 

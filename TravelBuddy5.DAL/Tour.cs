@@ -27,9 +27,9 @@ namespace TravelBuddy5.DAL
         public string DetailDescription { get; set; }
         public int FK_City { get; set; }
     
+        public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TourPOI> TourPOI { get; set; }
-        public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserTour> UserTour { get; set; }
     }

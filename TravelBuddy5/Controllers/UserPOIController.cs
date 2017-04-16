@@ -19,8 +19,8 @@ namespace TravelBuddy5.Controllers
         }
 
         [HttpGet]
-        [Route("api/UserPOI/CheckPOI")]
-        public HttpResponseMessage CheckPOI(int poiID, int userTourID)
+        [Route("api/UserPOI/CheckUserTourPOI")]
+        public HttpResponseMessage CheckUserTourPOI(int poiID, int userTourID)
         {
             try
             { 
@@ -49,5 +49,40 @@ namespace TravelBuddy5.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpGet]
+        [Route("api/UserPOI/GetNextPOI")]
+        public HttpResponseMessage GetNextPOI(int userTourID)
+        {
+            try
+            {
+                _repo.GetNextPOI(userTourID);
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.Conflict, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        [Route("api/UserPOI/GetRouteToNextPOI")]
+        public HttpResponseMessage GetRouteToNextPOI(int longitude, int latitude, int poiID)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.Conflict, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+
+
     }
 }

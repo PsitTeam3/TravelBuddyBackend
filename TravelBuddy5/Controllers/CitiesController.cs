@@ -18,11 +18,15 @@ namespace TravelBuddy5.Controllers
             _cityRepo = cityRepo;
         }
 
+        [HttpGet]
+        [Route("api/Cities/GetCities")]
         public IQueryable<CityDTO> GetCities()
         {
             return _cityRepo.GetCities().Select(CreateCityDTO());
         }
 
+        [HttpGet]
+        [Route("api/Cities/GetCitiesByCountry")]
         public IQueryable<CityDTO> GetCitiesByCountry(int id)
         {
             return _cityRepo.GetCitiesByCountryId(id).Select(CreateCityDTO());

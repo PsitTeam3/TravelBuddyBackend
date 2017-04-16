@@ -19,11 +19,15 @@ namespace TravelBuddy5.Controllers
             _repo = tourRepo;
         }
 
+        [HttpGet]
+        [Route("api/Tours/GetTours")]
         public IQueryable<TourDTO> GetTours()
         {
             return _repo.GetTours().Select(CreateTourDTO());
         }
 
+        [HttpGet]
+        [Route("api/Tours/GetToursByCity")]
         // GET: api/Tours
         public IQueryable<TourDTO> GetToursByCity(int id)
         {

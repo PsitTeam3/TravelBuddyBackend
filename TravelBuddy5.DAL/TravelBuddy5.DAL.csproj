@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TravelBuddy5.DAL</RootNamespace>
     <AssemblyName>TravelBuddy5.DAL</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,15 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="City.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="CoordinatesHelper.cs" />
     <Compile Include="Country.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IUserPOIRepo.cs" />
     <Compile Include="POI.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Repositories\CityRepo.cs" />
     <Compile Include="Repositories\CountryRepo.cs" />
@@ -73,64 +74,63 @@
     <Compile Include="Interfaces\IUserTourRepo.cs" />
     <Compile Include="Repositories\POIRepo.cs" />
     <Compile Include="Repositories\RepoBase.cs" />
+    <Compile Include="Repositories\RepoObject.cs" />
     <Compile Include="Repositories\TestRepo.cs" />
     <Compile Include="Repositories\TourRepo.cs" />
     <Compile Include="Repositories\UserPOIRepo.cs" />
     <Compile Include="Repositories\UserTourRepo.cs" />
     <Compile Include="Tour.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="TourPOI.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ToursDataModel.Context.cs">
+    <Compile Include="TravelBuddyEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ToursDataModel.Context.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ToursDataModel.cs">
+    <Compile Include="TravelBuddyEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ToursDataModel.Designer.cs">
+    <Compile Include="TravelBuddyEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ToursDataModel.edmx</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UserPOI.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="UserTour.cs">
-      <DependentUpon>ToursDataModel.tt</DependentUpon>
+      <DependentUpon>TravelBuddyEntities.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="ToursDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ToursDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
-    <None Include="ToursDataModel.edmx.diagram">
-      <DependentUpon>ToursDataModel.edmx</DependentUpon>
+    <EntityDeploy Include="TravelBuddyEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TravelBuddyEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TravelBuddyEntities.edmx.diagram">
+      <DependentUpon>TravelBuddyEntities.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ToursDataModel.Context.tt">
+    <Content Include="TravelBuddyEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ToursDataModel.edmx</DependentUpon>
-      <LastGenOutput>ToursDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>TravelBuddyEntities.edmx</DependentUpon>
+      <LastGenOutput>TravelBuddyEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ToursDataModel.tt">
+    <Content Include="TravelBuddyEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ToursDataModel.edmx</DependentUpon>
-      <LastGenOutput>ToursDataModel.cs</LastGenOutput>
+      <DependentUpon>TravelBuddyEntities.edmx</DependentUpon>
+      <LastGenOutput>TravelBuddyEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

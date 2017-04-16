@@ -17,6 +17,12 @@ namespace TravelBuddy5.DAL.Repositories
                 throw new Exception("User has already started this tour");
             }
 
+            //Constraint that user can only start one tour at the time
+            if(GetActiveTour(userID) != null)
+            {
+                throw new Exception("User has already started a tour");
+            }
+
             DB.UserTour.Add(new UserTour() { StartDate = DateTime.Now, FK_Tour = tourID, FK_User = userID });
             DB.SaveChanges();
         }
@@ -35,10 +41,16 @@ namespace TravelBuddy5.DAL.Repositories
             DB.SaveChanges();
         }
 
-        public bool CheckTourComplete(int userTour)
+        public bool CheckTourComplete(int userTourId)
         {
-            //TODO: implement
-            return false;
+            var userPOIRepo = new UserPOIRepo();
+            return !(userPOIRepo.GetNextPOI(userTourId).Value == null);
+           
+        }
+
+        public UserTour GetUserTour(int userTour)
+        {
+            return DB.UserTour.FirstOrDefault(ut => ut.Id == userTour);
         }
 
 
@@ -49,6 +61,9 @@ namespace TravelBuddy5.DAL.Repositories
             return userTour;
         }
 
-
+        public UserTour GetActiveTour(int userID)
+        {
+            return DB.UserTour.FirstOrDefault(ut => ut.EndDate == null);
+        }
     }
 }

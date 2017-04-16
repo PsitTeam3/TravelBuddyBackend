@@ -50,5 +50,21 @@ namespace TravelBuddy5.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpGet]
+        [Route("api/UserTour/GetActiveTour")]
+        public HttpResponseMessage GetActiveTour(int userID)
+        {
+            try
+            {
+                _repo.GetActiveTour(userID);
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.NotFound, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

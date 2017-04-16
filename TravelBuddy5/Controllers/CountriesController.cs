@@ -15,8 +15,10 @@ namespace TravelBuddy5.Controllers
             _countryRepo = countryRepo;
         }
 
+        [HttpGet]
+        [Route("api/Countries/GetCountries")]
         // GET: api/Countries
-        public IQueryable<CountryDTO> GetCountry()
+        public IQueryable<CountryDTO> GetCountries()
         {
             return _countryRepo.GetCountries().Select(country => new CountryDTO {Id = country.Id, Name = country.Name});
         }

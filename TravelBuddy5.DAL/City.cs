@@ -24,8 +24,8 @@ namespace TravelBuddy5.DAL
         public string Name { get; set; }
         public int FK_Country { get; set; }
     
+        public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tour> Tour { get; set; }
-        public virtual Country Country { get; set; }
     }
 }

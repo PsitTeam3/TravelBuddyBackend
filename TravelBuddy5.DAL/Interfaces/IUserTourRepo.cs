@@ -12,5 +12,6 @@ namespace TravelBuddy5.DAL.Interfaces
         void StartUserTour(int userID, int tourID);
         void EndUserTour(int userID, int tourID);
         UserTour GetUserTour(int tourID, int userID);
+        UserTour GetActiveTour(int userID);
     }
 }
