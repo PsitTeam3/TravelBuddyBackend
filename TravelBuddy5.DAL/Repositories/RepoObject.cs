@@ -24,5 +24,10 @@ namespace TravelBuddy5.DAL.Repositories
             Message = message;
         }
 
+        public bool HasError
+        {
+            get { return !string.IsNullOrEmpty(Message); }
+        }
+
     }
 }

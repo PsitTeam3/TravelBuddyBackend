@@ -21,7 +21,7 @@ namespace TravelBuddy5.DAL.Repositories
             return DB.TourPOI.Where(tp => tp.FK_Tour == tourID).Select(tp => tp.POI);
         }
 
-        public double GetPOIDistance(int poiID, double longitude, double latitude)
+        public double GetPOIDistance(int poiID, double latitude, double longitude)
         {
             return DB.POI.FirstOrDefault(p => p.Id == poiID).Coordinates.Distance(CoordinatesHelper.CreatePoint(latitude, longitude)).Value;
         }

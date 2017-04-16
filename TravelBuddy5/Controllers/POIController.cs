@@ -42,9 +42,9 @@ namespace TravelBuddy5.Controllers
 
         [HttpGet]
         [Route("api/POI/GetDistanceToPOI")]
-        public double GetDistanceToPOI(int poiID, double longitude, double latitude)
+        public double GetDistanceToPOI(int poiID, double latitude, double longitude)
         {
-            return _repo.GetPOIDistance(poiID, longitude, latitude);
+            return _repo.GetPOIDistance(poiID, latitude, longitude);
         }
 
         [HttpGet]

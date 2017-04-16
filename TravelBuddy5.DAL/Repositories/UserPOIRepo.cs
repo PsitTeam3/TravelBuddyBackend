@@ -44,8 +44,9 @@ namespace TravelBuddy5.DAL.Repositories
                 return new RepoObject<POI>(null, "No unchecked POI in current tour left");
             }
 
+            var poiid = poi.First().FK_POI;
             //Get POI
-            var res = DB.POI.Where(p => p.Id == poi.First().FK_POI);
+            var res = DB.POI.Where(p => p.Id == poiid);
             if (res.Count() == 0)
             {
                 return new RepoObject<POI>(res, "POI not found");

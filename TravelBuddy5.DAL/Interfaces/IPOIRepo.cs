@@ -12,7 +12,7 @@ namespace TravelBuddy5.DAL.Interfaces
         IQueryable<POI> GetPOIs();
         POI GetPOI(int poiID);
         IQueryable<POI> GetPOIsByTour(int tourID);
-        double GetPOIDistance(int poiID, double longitude, double latitude);
+        double GetPOIDistance(int poiID, double latitude, double longitude);
 
 
     }

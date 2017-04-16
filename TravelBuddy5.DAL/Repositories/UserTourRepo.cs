@@ -62,7 +62,7 @@ namespace TravelBuddy5.DAL.Repositories
 
         public RepoObject<UserTour> GetActiveTour(int userID)
         {
-            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.EndDate == null));
+            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.EndDate == null && ut.FK_User == userID));
         }
     }
 }

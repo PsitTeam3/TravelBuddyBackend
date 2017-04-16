@@ -66,7 +66,7 @@ namespace TravelBuddy5.Controllers
             }
 
             var res = nextPOI.Value.Select(POIMapper.CreatePOIDTO());
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, res);
 
         }
 
