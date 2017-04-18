@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using TravelBuddy5.DAL;
 
 namespace TravelBuddy5.Models
@@ -16,13 +12,11 @@ namespace TravelBuddy5.Models
             return poi => new PointOfInterestDTO
             {
                 Id = poi.Id,
+                Description = poi.Description,
                 Longitude = poi.Coordinates.Longitude.Value,
                 Latitude = poi.Coordinates.Latitude.Value,
                 VisitDuration = poi.VisitDuration
             };
         }
-
-
-
     }
 }
