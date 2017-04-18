@@ -10,5 +10,6 @@ namespace TravelBuddy5.Models
         public string DetailDescription { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
+        public string Image { get; set; }
     }
 }

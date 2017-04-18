@@ -5,5 +5,6 @@
     [Description] VARCHAR(200) NOT NULL, 
     [DetailDescription] TEXT NOT NULL, 
     [FK_City] INT NOT NULL, 
+    [Image] VARCHAR(100) NULL, 
     CONSTRAINT [FK_Tour_City] FOREIGN KEY (FK_City) REFERENCES [City]([Id]), 
 )

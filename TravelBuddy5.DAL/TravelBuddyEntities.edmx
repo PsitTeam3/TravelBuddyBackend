@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TravelBuddyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TravelBuddyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="Id" />
@@ -39,6 +39,7 @@
           <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="DetailDescription" Type="text" Nullable="false" />
           <Property Name="FK_City" Type="int" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TourPOI">
           <Key>
@@ -215,8 +216,7 @@
             <End Role="UserTour" EntitySet="UserTour" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TravelBuddyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -262,6 +262,7 @@
           <NavigationProperty Name="City" Relationship="Self.FK_Tour_City" FromRole="Tour" ToRole="City" />
           <NavigationProperty Name="TourPOI" Relationship="Self.FK_TourPOI_Tour" FromRole="Tour" ToRole="TourPOI" />
           <NavigationProperty Name="UserTour" Relationship="Self.FK_UserTour_Tour" FromRole="Tour" ToRole="UserTour" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TourPOI">
           <Key>
@@ -483,6 +484,7 @@
           <EntitySetMapping Name="Tour">
             <EntityTypeMapping TypeName="TravelBuddyModel.Tour">
               <MappingFragment StoreEntitySet="Tour">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

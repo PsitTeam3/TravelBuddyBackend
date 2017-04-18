@@ -13,10 +13,10 @@ namespace TravelBuddy5.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TravelBuddyEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public TravelBuddyEntities()
-            : base("name=TravelBuddyEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     

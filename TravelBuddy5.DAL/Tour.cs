@@ -26,6 +26,7 @@ namespace TravelBuddy5.DAL
         public string Description { get; set; }
         public string DetailDescription { get; set; }
         public int FK_City { get; set; }
+        public string Image { get; set; }
     
         public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
