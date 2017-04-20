@@ -13,10 +13,11 @@ namespace TravelBuddy5.DAL.Repositories
 
         public void StartUserTour(int userID, int tourID)
         {
-            if(DB.UserTour.Where(ut => ut.FK_Tour == tourID && ut.FK_User == userID).Count() > 0)
+            // This is wrong, no? User should be able to do the same tour multiple times if he likes... 
+            /*if(DB.UserTour.Where(ut => ut.FK_Tour == tourID && ut.FK_User == userID).Count() > 0)
             {
                 throw new Exception("User has already started this tour");
-            }
+            }*/
 
             //Constraint that user can only start one tour at the time
             if(GetActiveTour(userID).Value.Any())
