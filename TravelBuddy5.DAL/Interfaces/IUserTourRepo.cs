@@ -11,7 +11,7 @@ namespace TravelBuddy5.DAL.Interfaces
     {
 
         void StartUserTour(int userID, int tourID);
-        void EndUserTour(int userID, int tourID);
+        void EndUserTour(int userID);
         RepoObject<UserTour> GetUserTour(int tourID, int userID);
         RepoObject<UserTour> GetActiveTour(int userID);
     }

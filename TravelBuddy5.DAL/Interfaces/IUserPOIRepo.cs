@@ -9,9 +9,10 @@ namespace TravelBuddy5.DAL.Interfaces
 {
     public interface IUserPOIRepo
     {
-        void CheckPOI(int poiID, int tourID);
-        void CheckPOI(int poiID, int tourID, int userID);
+        void SetPOIAsVisited(int poiID, int tourID);
+        void SetPOIAsVisited(int poiID, int tourID, int userID);
 
         RepoObject<POI> GetNextPOI(int userTourId);
+        RepoObject<POI> GetNextPOI(UserTour usertour);
     }
 }

@@ -226,9 +226,13 @@
     <Compile Include="Models\POIMapper.cs" />
     <Compile Include="Models\PointOfInterestDTO.cs" />
     <Compile Include="Models\TourDTO.cs" />
+    <Compile Include="Models\RouteToPointOfInterestDTO.cs" />
     <Compile Include="Models\UserTourDTO.cs" />
+    <Compile Include="Models\CoordinateDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Services\GeoLocationService.cs" />
+    <Compile Include="Services\IGeoLocationService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

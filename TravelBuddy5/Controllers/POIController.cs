@@ -1,18 +1,13 @@
-﻿using GoogleMapsApi;
-using GoogleMapsApi.Entities.Directions.Request;
-using GoogleMapsApi.Entities.Directions.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using TravelBuddy.DAL;
 using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
-using TravelBuddy5.DAL.Repositories;
 using TravelBuddy5.Models;
+using TravelBuddy5.Services;
 
 namespace TravelBuddy5.Controllers
 {
@@ -20,10 +15,17 @@ namespace TravelBuddy5.Controllers
     {
 
         private readonly IPOIRepo _repo;
+        private readonly IUserTourRepo _userTourRepo;
+        private readonly IUserPOIRepo _userPoiRepo;
+        private readonly IGeoLocationService _geoLocationService;
 
-        public POIController(IPOIRepo poiRepo)
+        public POIController(IPOIRepo poiRepo, IUserTourRepo userTourRepo, IUserPOIRepo userPoiRepo, 
+            IGeoLocationService geoLocationService)
         {
             _repo = poiRepo;
+            _userTourRepo = userTourRepo;
+            _userPoiRepo = userPoiRepo;
+            _geoLocationService = geoLocationService;
         }
 
         [HttpGet]
@@ -48,6 +50,14 @@ namespace TravelBuddy5.Controllers
         }
 
         [HttpGet]
+        [Route("api/POI/GetDistanceToNextPOI")]
+        public double GetDistanceToNextPOI(int userID, double latitude, double longitude)
+        {
+            POI nextPoi = GetNextPOI(userID);
+            return _repo.GetPOIDistance(nextPoi.Id, latitude, longitude);
+        }
+
+        [HttpGet]
         [Route("api/POI/IsPOIInRange")]
         public bool IsPOIInRange(int poiID, double longitude, double latitude, float allowedDistance = 3)
         {
@@ -55,24 +65,22 @@ namespace TravelBuddy5.Controllers
         }
 
         [HttpGet]
+        [Route("api/POI/IsNextPOIInRange")]
+        public bool IsNextPOIInRange(int userID, double longitude, double latitude, float allowedDistance = 3)
+        {
+            return GetDistanceToNextPOI(userID, longitude, latitude) <= allowedDistance;
+        }
+
+        [HttpGet]
         [Route("api/POI/GetRouteToNextPOI")]
-        ///travelMode: 1 = Walking, 2 = Biking
-        public HttpResponseMessage GetRouteToNextPOI(double currentLatitude, double currentLongitude, int poiID, int travelMode)
+        public HttpResponseMessage GetRouteToNextPOI(int userId, double currentLatitude, double currentLongitude)
         {
             try
             {
-                var poi = _repo.GetPOI(poiID);
-
-                DirectionsRequest directionsRequest = new DirectionsRequest()
-                {
-                    Origin = CoordinatesHelper.ToString(currentLatitude, currentLongitude),
-                    Destination = CoordinatesHelper.ToString(poi.Coordinates),
-                    TravelMode = (TravelMode)travelMode
-                };
-
-                var directions = GoogleMaps.Directions.Query(directionsRequest);
-                IEnumerable<Step> steps = directions.Routes.First().Legs.First().Steps;
-                return Request.CreateResponse(HttpStatusCode.OK, steps);
+                var poi = GetNextPOI(userId);
+                IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude, poi.Coordinates.Latitude.Value,
+                    poi.Coordinates.Longitude.Value);
+                return Request.CreateResponse(HttpStatusCode.OK, route);
             }
             catch (Exception ex)
             {
@@ -81,6 +89,11 @@ namespace TravelBuddy5.Controllers
             }
         }
 
-
+        private POI GetNextPOI(int userId)
+        {
+            var userTour = _userTourRepo.GetActiveTour(userId).Value.First();
+            var poi = _userPoiRepo.GetNextPOI(userTour).Value.First();
+            return poi;
+        }
     }
 }

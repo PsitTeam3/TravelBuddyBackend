@@ -12,5 +12,16 @@ namespace TravelBuddy5.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
 
+        public static PointOfInterestDTO Create(POI poi)
+        {
+            return new PointOfInterestDTO
+            {
+                Id = poi.Id,
+                Description = poi.Description,
+                VisitDuration = poi.VisitDuration,
+                Longitude = poi.Coordinates.Longitude.Value,
+                Latitude = poi.Coordinates.Latitude.Value
+            };
+        }
     }
 }

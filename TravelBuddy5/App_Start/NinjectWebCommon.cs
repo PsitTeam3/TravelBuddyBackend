@@ -1,4 +1,5 @@
 using TravelBuddy5.DAL.Repositories;
+using TravelBuddy5.Services;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TravelBuddy5.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(TravelBuddy5.App_Start.NinjectWebCommon), "Stop")]
@@ -77,6 +78,7 @@ namespace TravelBuddy5.App_Start
             kernel.Bind<IPOIRepo>().To<POIRepo>();
             kernel.Bind<IUserTourRepo>().To<UserTourRepo>();
             kernel.Bind<IUserPOIRepo>().To<UserPOIRepo>();
+            kernel.Bind<IGeoLocationService>().To<GeoLocationService>();
         }        
     }
 }

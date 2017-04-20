@@ -1,6 +1,4 @@
-﻿using GoogleMapsApi.Entities.Directions.Request;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,10 +13,12 @@ namespace TravelBuddy5.Controllers
     {
 
         private readonly IUserPOIRepo _repo;
+        private readonly IUserTourRepo _userTourRepo;
 
-        public UserPOIController(IUserPOIRepo userPOIRepo)
+        public UserPOIController(IUserPOIRepo userPOIRepo, IUserTourRepo userTourRepo)
         {
             _repo = userPOIRepo;
+            _userTourRepo = userTourRepo;
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace TravelBuddy5.Controllers
         {
             try
             { 
-                _repo.CheckPOI(poiID, userTourID);
+                _repo.SetPOIAsVisited(poiID, userTourID);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,25 @@ namespace TravelBuddy5.Controllers
         {
             try
             {
-                _repo.CheckPOI(poiID, tourID, userID);
+                _repo.SetPOIAsVisited(poiID, tourID, userID);
+            }
+            catch (Exception ex)
+            {
+                HttpError err = new HttpError(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.Conflict, err);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        [Route("api/UserPOI/SetNextPOIAsVisited")]
+        public HttpResponseMessage SetNextPOIAsVisited(int userID)
+        {
+            try
+            {
+                UserTour userTour = _userTourRepo.GetActiveTour(userID).Value.First();
+                POI currentPoi = _repo.GetNextPOI(userTour).Value.First();
+                _repo.SetPOIAsVisited(currentPoi.Id, userTour.Id);
             }
             catch (Exception ex)
             {
@@ -55,20 +73,19 @@ namespace TravelBuddy5.Controllers
 
         [HttpGet]
         [Route("api/UserPOI/GetNextPOI")]
-        public HttpResponseMessage GetNextPOI(int userTourID)
+        public HttpResponseMessage GetNextPOI(int userId)
         {
-
-            var nextPOI = _repo.GetNextPOI(userTourID);
+            var userTour = _userTourRepo.GetActiveTour(userId).Value.First();
+            var nextPOI = _repo.GetNextPOI(userTour);
             if(nextPOI.Value == null)
             {
                 HttpError err = new HttpError(nextPOI.Message);
                 return Request.CreateErrorResponse(HttpStatusCode.Conflict, err);
             }
 
-            var res = nextPOI.Value.Select(POIMapper.CreatePOIDTO());
+            PointOfInterestDTO res = nextPOI.Value.Select(POIMapper.CreatePOIDTO()).First();
             return Request.CreateResponse(HttpStatusCode.OK, res);
 
         }
-
     }
 }
