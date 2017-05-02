@@ -26,22 +26,6 @@ namespace TravelBuddy5.Controllers
             _geoLocationService = geoLocationService;
         }
 
-        /*[HttpPost]
-        [Route("api/UserTour/StartUserTour")]
-        public HttpResponseMessage StartUserTour(int userID, int tourID)
-        {
-            try
-            {
-                _userTourRepo.StartUserTour(userID, tourID);
-            }
-            catch(Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.Forbidden, err);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }*/
-
         [HttpPost]
         [Route("api/UserTour/StartUserTour")]
         public RouteToPointOfInterestDTO StartUserTour(int userID, int tourID, double currentLatitude, double currentLongitude)
@@ -90,23 +74,6 @@ namespace TravelBuddy5.Controllers
                 throw new HttpResponseException(resp);
             }
         }
-
-
-        /*[HttpGet]
-        [Route("api/UserTour/EndUserTour")]
-        public HttpResponseMessage EndUserTour(int userID, int tourID)
-        {
-            try
-            {
-                _userTourRepo.EndUserTour(userID, tourID);
-            }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.NotFound, err);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }*/
 
         [HttpGet]
         [Route("api/UserTour/GetActiveTour")]

@@ -21,38 +21,6 @@ namespace TravelBuddy5.Controllers
             _userTourRepo = userTourRepo;
         }
 
-        [HttpGet]
-        [Route("api/UserPOI/CheckUserTourPOI")]
-        public HttpResponseMessage CheckUserTourPOI(int poiID, int userTourID)
-        {
-            try
-            { 
-                _repo.SetPOIAsVisited(poiID, userTourID);
-            }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, err);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
-
-        [HttpGet]
-        [Route("api/UserPOI/CheckPOI")]
-        public HttpResponseMessage CheckPOI(int poiID, int tourID, int userID)
-        {
-            try
-            {
-                _repo.SetPOIAsVisited(poiID, tourID, userID);
-            }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.Conflict, err);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
-
         [HttpPost]
         [Route("api/UserPOI/SetNextPOIAsVisited")]
         public HttpResponseMessage SetNextPOIAsVisited(int userID)
@@ -73,9 +41,9 @@ namespace TravelBuddy5.Controllers
 
         [HttpGet]
         [Route("api/UserPOI/GetNextPOI")]
-        public HttpResponseMessage GetNextPOI(int userId)
+        public HttpResponseMessage GetNextPOI(int userID)
         {
-            var userTour = _userTourRepo.GetActiveTour(userId);
+            var userTour = _userTourRepo.GetActiveTour(userID);
             var nextPOI = _repo.GetNextPOI(userTour);
             if(nextPOI.Value == null)
             {

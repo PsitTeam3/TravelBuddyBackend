@@ -9,7 +9,6 @@ using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
 using TravelBuddy5.Interfaces;
 using TravelBuddy5.Models;
-using TravelBuddy5.Services;
 
 namespace TravelBuddy5.Controllers
 {
@@ -39,16 +38,9 @@ namespace TravelBuddy5.Controllers
 
         [HttpGet]
         [Route("api/POI/GetPOIsByTour")]
-        public IEnumerable<PointOfInterestDTO> GetPOIsByTour(int id)
+        public IEnumerable<PointOfInterestDTO> GetPOIsByTour(int tourID)
         {
-            return _repo.GetPOIsByTour(id).ToList().Select(PointOfInterestDTO.Create);
-        }
-
-        [HttpGet]
-        [Route("api/POI/GetDistanceToPOI")]
-        public double GetDistanceToPOI(int poiID, double latitude, double longitude)
-        {
-            return _repo.GetPOIDistance(poiID, latitude, longitude);
+            return _repo.GetPOIsByTour(tourID).ToList().Select(PointOfInterestDTO.Create);
         }
 
         [HttpGet]
@@ -63,14 +55,14 @@ namespace TravelBuddy5.Controllers
         [Route("api/POI/IsPOIInRange")]
         public bool IsPOIInRange(int poiID, double longitude, double latitude, float allowedDistance = 3)
         {
-            return GetDistanceToPOI(poiID, longitude, latitude) <= allowedDistance;
+            return _repo.GetPOIDistance(poiID, latitude, longitude) <= allowedDistance;
         }
 
         [HttpGet]
         [Route("api/POI/IsNextPOIInRange")]
         public bool IsNextPOIInRange(int userID, double longitude, double latitude, float allowedDistance = 3)
         {
-            return GetDistanceToNextPOI(userID, longitude, latitude) <= allowedDistance;
+            return GetDistanceToNextPOI(userID, latitude, longitude) <= allowedDistance;
         }
 
         [HttpGet]
@@ -92,9 +84,9 @@ namespace TravelBuddy5.Controllers
             }
         }
 
-        private POI GetNextPOI(int userId)
+        private POI GetNextPOI(int userID)
         {
-            var userTour = _userTourRepo.GetActiveTour(userId);
+            var userTour = _userTourRepo.GetActiveTour(userID);
             var poi = _userPoiRepo.GetNextPOI(userTour).Value.First();
             return poi;
         }
