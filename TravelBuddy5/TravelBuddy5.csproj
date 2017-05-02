@@ -223,7 +223,6 @@
     <Compile Include="Models\CityDTO.cs" />
     <Compile Include="Models\CountryDTO.cs" />
     <Compile Include="Models\Mapper.cs" />
-    <Compile Include="Models\POIMapper.cs" />
     <Compile Include="Models\PointOfInterestDTO.cs" />
     <Compile Include="Models\TourDTO.cs" />
     <Compile Include="Models\RouteToPointOfInterestDTO.cs" />
@@ -232,7 +231,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\GeoLocationService.cs" />
-    <Compile Include="Services\IGeoLocationService.cs" />
+    <Compile Include="Interfaces\IGeoLocationService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

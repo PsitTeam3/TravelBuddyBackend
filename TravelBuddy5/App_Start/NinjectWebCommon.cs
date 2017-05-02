@@ -1,4 +1,5 @@
 using TravelBuddy5.DAL.Repositories;
+using TravelBuddy5.Interfaces;
 using TravelBuddy5.Services;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TravelBuddy5.App_Start.NinjectWebCommon), "Start")]
@@ -9,13 +10,11 @@ namespace TravelBuddy5.App_Start
     using System;
     using System.Web;
     using System.Web.Http;
-    using DAL;
     using IoC;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
-    using Models;
     using DAL.Interfaces;
     public static class NinjectWebCommon 
     {
@@ -70,7 +69,6 @@ namespace TravelBuddy5.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-
             kernel.Bind<ITestRepo>().To<TestRepo>();
             kernel.Bind<ITourRepo>().To<TourRepo>();
             kernel.Bind<ICityRepo>().To<CityRepo>();

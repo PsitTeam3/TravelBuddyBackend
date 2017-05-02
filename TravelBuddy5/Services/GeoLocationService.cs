@@ -5,6 +5,7 @@ using GoogleMapsApi;
 using GoogleMapsApi.Entities.Directions.Request;
 using GoogleMapsApi.Entities.Directions.Response;
 using TravelBuddy.DAL;
+using TravelBuddy5.Interfaces;
 using TravelBuddy5.Models;
 
 namespace TravelBuddy5.Services

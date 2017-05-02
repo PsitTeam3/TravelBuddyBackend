@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
+using TravelBuddy5.Interfaces;
 using TravelBuddy5.Models;
 using TravelBuddy5.Services;
 
@@ -19,7 +21,7 @@ namespace TravelBuddy5.Controllers
         private readonly IUserPOIRepo _userPoiRepo;
         private readonly IGeoLocationService _geoLocationService;
 
-        public POIController(IPOIRepo poiRepo, IUserTourRepo userTourRepo, IUserPOIRepo userPoiRepo, 
+        public POIController(IPOIRepo poiRepo, IUserTourRepo userTourRepo, IUserPOIRepo userPoiRepo,
             IGeoLocationService geoLocationService)
         {
             _repo = poiRepo;
@@ -30,16 +32,16 @@ namespace TravelBuddy5.Controllers
 
         [HttpGet]
         [Route("api/POI/GetPOIs")]
-        public IQueryable<PointOfInterestDTO> GetPOIs()
+        public IEnumerable<PointOfInterestDTO> GetPOIs()
         {
-            return _repo.GetPOIs().Select(POIMapper.CreatePOIDTO());
+            return _repo.GetPOIs().ToList().Select(PointOfInterestDTO.Create);
         }
 
         [HttpGet]
         [Route("api/POI/GetPOIsByTour")]
-        public IQueryable<PointOfInterestDTO> GetPOIsByTour(int id)
+        public IEnumerable<PointOfInterestDTO> GetPOIsByTour(int id)
         {
-            return _repo.GetPOIsByTour(id).Select(POIMapper.CreatePOIDTO());
+            return _repo.GetPOIsByTour(id).ToList().Select(PointOfInterestDTO.Create);
         }
 
         [HttpGet]
@@ -78,7 +80,8 @@ namespace TravelBuddy5.Controllers
             try
             {
                 var poi = GetNextPOI(userId);
-                IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude, poi.Coordinates.Latitude.Value,
+                IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude,
+                    poi.Coordinates.Latitude.Value,
                     poi.Coordinates.Longitude.Value);
                 return Request.CreateResponse(HttpStatusCode.OK, route);
             }

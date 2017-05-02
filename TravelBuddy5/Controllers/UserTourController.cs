@@ -8,6 +8,7 @@ using System.Web.Http;
 using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
 using TravelBuddy5.DAL.Repositories;
+using TravelBuddy5.Interfaces;
 using TravelBuddy5.Models;
 using TravelBuddy5.Services;
 
@@ -47,14 +48,51 @@ namespace TravelBuddy5.Controllers
         [Route("api/UserTour/StartUserTour")]
         public RouteToPointOfInterestDTO StartUserTour(int userID, int tourID, double currentLatitude, double currentLongitude)
         {
+            VerifyNoTourIsStarted(userID);
             _userTourRepo.StartUserTour(userID, tourID);
             RepoObject<UserTour> activeTour = _userTourRepo.GetActiveTour(userID);
             POI nextPOI = _userPOIRepo.GetNextPOI(activeTour.Value.First().Id).Value.First();
             IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude,
-                nextPOI.Coordinates.Longitude.Value,
-                nextPOI.Coordinates.Latitude.Value);
+                nextPOI.Coordinates.Latitude.Value,
+                nextPOI.Coordinates.Longitude.Value);
             return new RouteToPointOfInterestDTO {NextPOI = PointOfInterestDTO.Create(nextPOI), RouteToNextPOI = route};
         }
+
+        private void VerifyNoTourIsStarted(int userID)
+        {
+            if (_userTourRepo.GetActiveTour(userID).Value.Any())
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent("User has already a started tour"),
+                    ReasonPhrase = "Other tour already active"
+                };
+                throw new HttpResponseException(resp);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/UserTour/EndUserTour")]
+        public HttpResponseMessage EndUserTour(int userID)
+        {
+            VerifyAnyTourIsStarted(userID);
+            _userTourRepo.EndUserTour(userID);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        private void VerifyAnyTourIsStarted(int userID)
+        {
+            if (!_userTourRepo.GetActiveTour(userID).Value.Any())
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent("User not started any tour"),
+                    ReasonPhrase = "No tour is active"
+                };
+                throw new HttpResponseException(resp);
+            }
+        }
+
 
         /*[HttpGet]
         [Route("api/UserTour/EndUserTour")]
@@ -71,22 +109,6 @@ namespace TravelBuddy5.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }*/
-
-        [HttpPost]
-        [Route("api/UserTour/EndUserTour")]
-        public HttpResponseMessage EndUserTour(int userID)
-        {
-            try
-            {
-                _userTourRepo.EndUserTour(userID);
-            }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.NotFound, err);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
 
         [HttpGet]
         [Route("api/UserTour/GetActiveTour")]

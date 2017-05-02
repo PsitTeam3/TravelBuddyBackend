@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using TravelBuddy5.Models;
 
-namespace TravelBuddy5.Services
+namespace TravelBuddy5.Interfaces
 {
     public interface IGeoLocationService
     {

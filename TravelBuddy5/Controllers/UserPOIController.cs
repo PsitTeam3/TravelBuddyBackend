@@ -83,7 +83,7 @@ namespace TravelBuddy5.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.Conflict, err);
             }
 
-            PointOfInterestDTO res = nextPOI.Value.Select(POIMapper.CreatePOIDTO()).First();
+            PointOfInterestDTO res = PointOfInterestDTO.Create(nextPOI.Value.First());
             return Request.CreateResponse(HttpStatusCode.OK, res);
 
         }
