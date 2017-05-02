@@ -20,7 +20,7 @@ namespace TravelBuddy5.DAL.Repositories
             }*/
 
             //Constraint that user can only start one tour at the time
-            if(GetActiveTour(userID).Value.Any())
+            if(GetActiveTour(userID) != null)
             {
                 throw new Exception("User has already started a tour");
             }
@@ -50,20 +50,19 @@ namespace TravelBuddy5.DAL.Repositories
            
         }
 
-        public RepoObject<UserTour> GetUserTour(int userTour)
+        public UserTour GetUserTour(int userTour)
         {
-            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.Id == userTour));
+            return DB.UserTour.FirstOrDefault(ut => ut.Id == userTour);
         }
 
-
-        public RepoObject<UserTour> GetUserTour(int tourID, int userID)
+        public UserTour GetUserTour(int tourID, int userID)
         {
-            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.FK_Tour == tourID && ut.FK_User == userID));
+            return DB.UserTour.FirstOrDefault(ut => ut.FK_Tour == tourID && ut.FK_User == userID);
         }
 
-        public RepoObject<UserTour> GetActiveTour(int userID)
+        public UserTour GetActiveTour(int userID)
         {
-            return new RepoObject<UserTour>(DB.UserTour.Where(ut => ut.EndDate == null && ut.FK_User == userID));
+            return DB.UserTour.FirstOrDefault(ut => ut.EndDate == null && ut.FK_User == userID);
         }
     }
 }

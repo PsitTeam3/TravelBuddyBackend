@@ -7,10 +7,8 @@ using System.Net.Http;
 using System.Web.Http;
 using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
-using TravelBuddy5.DAL.Repositories;
 using TravelBuddy5.Interfaces;
 using TravelBuddy5.Models;
-using TravelBuddy5.Services;
 
 namespace TravelBuddy5.Controllers
 {
@@ -50,8 +48,8 @@ namespace TravelBuddy5.Controllers
         {
             VerifyNoTourIsStarted(userID);
             _userTourRepo.StartUserTour(userID, tourID);
-            RepoObject<UserTour> activeTour = _userTourRepo.GetActiveTour(userID);
-            POI nextPOI = _userPOIRepo.GetNextPOI(activeTour.Value.First().Id).Value.First();
+            UserTour activeTour = _userTourRepo.GetActiveTour(userID);
+            POI nextPOI = _userPOIRepo.GetNextPOI(activeTour.Id).Value.First();
             IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude,
                 nextPOI.Coordinates.Latitude.Value,
                 nextPOI.Coordinates.Longitude.Value);
@@ -60,7 +58,7 @@ namespace TravelBuddy5.Controllers
 
         private void VerifyNoTourIsStarted(int userID)
         {
-            if (_userTourRepo.GetActiveTour(userID).Value.Any())
+            if (_userTourRepo.GetActiveTour(userID) != null)
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
@@ -82,7 +80,7 @@ namespace TravelBuddy5.Controllers
 
         private void VerifyAnyTourIsStarted(int userID)
         {
-            if (!_userTourRepo.GetActiveTour(userID).Value.Any())
+            if (_userTourRepo.GetActiveTour(userID) == null)
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
                 {
@@ -114,15 +112,14 @@ namespace TravelBuddy5.Controllers
         [Route("api/UserTour/GetActiveTour")]
         public HttpResponseMessage GetActiveTour(int userID)
         {
-            var res = _userTourRepo.GetActiveTour(userID);
-            if(res.HasError)
+            UserTour tour = _userTourRepo.GetActiveTour(userID);
+            if(tour == null)
             {
-                HttpError err = new HttpError(res.Message);
+                HttpError err = new HttpError("No tour is active for the defined user");
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
             }
             
-            return Request.CreateResponse(HttpStatusCode.OK, res.Value.Map<UserTour, UserTourDTO>());
+            return Request.CreateResponse(HttpStatusCode.OK, Mapper.Map<UserTourDTO>(tour));
         }
-
     }
 }

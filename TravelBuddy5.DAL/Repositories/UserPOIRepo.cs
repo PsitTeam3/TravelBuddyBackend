@@ -24,7 +24,7 @@ namespace TravelBuddy5.DAL.Repositories
         {
             var userTourRepo = new UserTourRepo();
             var userTour = userTourRepo.GetUserTour(tourID, userID);
-            SetPOIAsVisited(poiID, userTour.Value.First().Id);
+            SetPOIAsVisited(poiID, userTour.Id);
         }
 
         public RepoObject<POI> GetNextPOI(int userTourId)

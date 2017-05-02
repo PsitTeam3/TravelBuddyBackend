@@ -59,7 +59,7 @@ namespace TravelBuddy5.Controllers
         {
             try
             {
-                UserTour userTour = _userTourRepo.GetActiveTour(userID).Value.First();
+                UserTour userTour = _userTourRepo.GetActiveTour(userID);
                 POI currentPoi = _repo.GetNextPOI(userTour).Value.First();
                 _repo.SetPOIAsVisited(currentPoi.Id, userTour.Id);
             }
@@ -75,7 +75,7 @@ namespace TravelBuddy5.Controllers
         [Route("api/UserPOI/GetNextPOI")]
         public HttpResponseMessage GetNextPOI(int userId)
         {
-            var userTour = _userTourRepo.GetActiveTour(userId).Value.First();
+            var userTour = _userTourRepo.GetActiveTour(userId);
             var nextPOI = _repo.GetNextPOI(userTour);
             if(nextPOI.Value == null)
             {
@@ -85,7 +85,6 @@ namespace TravelBuddy5.Controllers
 
             PointOfInterestDTO res = PointOfInterestDTO.Create(nextPOI.Value.First());
             return Request.CreateResponse(HttpStatusCode.OK, res);
-
         }
     }
 }

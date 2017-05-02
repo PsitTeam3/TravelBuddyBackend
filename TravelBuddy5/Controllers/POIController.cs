@@ -94,7 +94,7 @@ namespace TravelBuddy5.Controllers
 
         private POI GetNextPOI(int userId)
         {
-            var userTour = _userTourRepo.GetActiveTour(userId).Value.First();
+            var userTour = _userTourRepo.GetActiveTour(userId);
             var poi = _userPoiRepo.GetNextPOI(userTour).Value.First();
             return poi;
         }

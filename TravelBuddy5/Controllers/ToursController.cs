@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Web.Http;
 using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
-using TravelBuddy5.DAL.Repositories;
 using TravelBuddy5.Models;
 
 namespace TravelBuddy5.Controllers
