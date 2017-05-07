@@ -214,7 +214,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\POIController.cs" />
     <Compile Include="Controllers\ToursController.cs" />
-    <Compile Include="Controllers\UserPOIController.cs" />
     <Compile Include="Controllers\UserTourController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -46,8 +46,7 @@ namespace TravelBuddy5.DAL.Repositories
         public bool CheckTourComplete(int userTourId)
         {
             var userPOIRepo = new UserPOIRepo();
-            return !(userPOIRepo.GetNextPOI(userTourId).Value == null);
-           
+            return userPOIRepo.GetNextPOI(userTourId) == null;
         }
 
         public UserTour GetUserTour(int userTour)

@@ -74,7 +74,6 @@
     <Compile Include="Interfaces\IUserTourRepo.cs" />
     <Compile Include="Repositories\POIRepo.cs" />
     <Compile Include="Repositories\RepoBase.cs" />
-    <Compile Include="Repositories\RepoObject.cs" />
     <Compile Include="Repositories\TestRepo.cs" />
     <Compile Include="Repositories\TourRepo.cs" />
     <Compile Include="Repositories\UserPOIRepo.cs" />

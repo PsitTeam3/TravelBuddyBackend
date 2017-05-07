@@ -27,13 +27,13 @@ namespace TravelBuddy5.DAL.Repositories
             SetPOIAsVisited(poiID, userTour.Id);
         }
 
-        public RepoObject<POI> GetNextPOI(int userTourId)
+        public POI GetNextPOI(int userTourId)
         {
             var usertour = DB.UserTour.FirstOrDefault(t => t.Id == userTourId);
             return GetNextPOI(usertour);
         }
 
-        public RepoObject<POI> GetNextPOI(UserTour usertour)
+        public POI GetNextPOI(UserTour usertour)
         {
             //Get TourPOIs for tour and for all UserPOIs
             var userpois =
@@ -43,22 +43,22 @@ namespace TravelBuddy5.DAL.Repositories
             var tourpois = DB.TourPOI.Where(tp => tp.FK_Tour == usertour.FK_Tour);
 
             //Get the next POI by order that is in the tour but not in the UserPOIs yet
-            var poi = Enumerable.Except<TourPOI>(tourpois, userpois).OrderBy(tp => tp.Order);
+            var remainingTourPois = Enumerable.Except<TourPOI>(tourpois, userpois).OrderBy(tp => tp.Order);
 
-            if (poi.Count() == 0)
+            POI nextPoi;
+            if (remainingTourPois.Any())
             {
-                return new RepoObject<POI>(null, "No unchecked POI in current tour left");
+                var poiID = remainingTourPois.First().FK_POI;
+
+                //Get POI
+                nextPoi = DB.POI.First(p => p.Id == poiID);
+            }
+            else
+            {
+                nextPoi = null;
             }
 
-            var poiid = poi.First().FK_POI;
-            //Get POI
-            var res = DB.POI.Where(p => p.Id == poiid);
-            if (res.Count() == 0)
-            {
-                return new RepoObject<POI>(res, "POI not found");
-            }
-
-            return new RepoObject<POI>(res);
+            return nextPoi;
         }
     }
 }

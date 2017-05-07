@@ -12,9 +12,9 @@ namespace TravelBuddy5.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
 
-        public static PointOfInterestDTO Create(POI poi)
+        public static Expression<Func<POI, PointOfInterestDTO>> Create()
         {
-            return new PointOfInterestDTO
+            return poi => new PointOfInterestDTO
             {
                 Id = poi.Id,
                 Description = poi.Description,

@@ -33,11 +33,11 @@ namespace TravelBuddy5.Controllers
             VerifyNoTourIsStarted(userID);
             _userTourRepo.StartUserTour(userID, tourID);
             UserTour activeTour = _userTourRepo.GetActiveTour(userID);
-            POI nextPOI = _userPOIRepo.GetNextPOI(activeTour.Id).Value.First();
+            POI nextPOI = _userPOIRepo.GetNextPOI(activeTour.Id);
             IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude,
                 nextPOI.Coordinates.Latitude.Value,
                 nextPOI.Coordinates.Longitude.Value);
-            return new RouteToPointOfInterestDTO {NextPOI = PointOfInterestDTO.Create(nextPOI), RouteToNextPOI = route};
+            return new RouteToPointOfInterestDTO {NextPOI = PointOfInterestDTO.Create().Compile()(nextPOI), RouteToNextPOI = route};
         }
 
         private void VerifyNoTourIsStarted(int userID)
@@ -55,38 +55,41 @@ namespace TravelBuddy5.Controllers
 
         [HttpPost]
         [Route("api/UserTour/EndUserTour")]
-        public HttpResponseMessage EndUserTour(int userID)
+        public void EndUserTour(int userID)
         {
             VerifyAnyTourIsStarted(userID);
             _userTourRepo.EndUserTour(userID);
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         private void VerifyAnyTourIsStarted(int userID)
         {
             if (_userTourRepo.GetActiveTour(userID) == null)
             {
-                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
-                {
-                    Content = new StringContent("User not started any tour"),
-                    ReasonPhrase = "No tour is active"
-                };
-                throw new HttpResponseException(resp);
+                ThrowNoStartedTourException();
             }
+        }
+
+        private static void ThrowNoStartedTourException()
+        {
+            var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
+            {
+                Content = new StringContent("User not started any tour"),
+                ReasonPhrase = "No tour is active"
+            };
+            throw new HttpResponseException(resp);
         }
 
         [HttpGet]
         [Route("api/UserTour/GetActiveTour")]
-        public HttpResponseMessage GetActiveTour(int userID)
+        public UserTourDTO GetActiveTour(int userID)
         {
             UserTour tour = _userTourRepo.GetActiveTour(userID);
             if(tour == null)
             {
-                HttpError err = new HttpError("No tour is active for the defined user");
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+                ThrowNoStartedTourException();
             }
             
-            return Request.CreateResponse(HttpStatusCode.OK, Mapper.Map<UserTourDTO>(tour));
+            return Mapper.Map<UserTourDTO>(tour);
         }
     }
 }

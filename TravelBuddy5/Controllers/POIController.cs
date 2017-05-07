@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TravelBuddy.DAL;
 using TravelBuddy5.DAL;
 using TravelBuddy5.DAL.Interfaces;
 using TravelBuddy5.Interfaces;
@@ -14,18 +15,17 @@ namespace TravelBuddy5.Controllers
 {
     public class POIController : ApiController
     {
-
-        private readonly IPOIRepo _repo;
+        private readonly IPOIRepo _poiRepo;
         private readonly IUserTourRepo _userTourRepo;
-        private readonly IUserPOIRepo _userPoiRepo;
+        private readonly IUserPOIRepo _userPOIRepo;
         private readonly IGeoLocationService _geoLocationService;
 
-        public POIController(IPOIRepo poiRepo, IUserTourRepo userTourRepo, IUserPOIRepo userPoiRepo,
+        public POIController(IPOIRepo poiRepo, IUserTourRepo userTourRepo, IUserPOIRepo userPOIRepo,
             IGeoLocationService geoLocationService)
         {
-            _repo = poiRepo;
+            _poiRepo = poiRepo;
             _userTourRepo = userTourRepo;
-            _userPoiRepo = userPoiRepo;
+            _userPOIRepo = userPOIRepo;
             _geoLocationService = geoLocationService;
         }
 
@@ -33,29 +33,39 @@ namespace TravelBuddy5.Controllers
         [Route("api/POI/GetPOIs")]
         public IEnumerable<PointOfInterestDTO> GetPOIs()
         {
-            return _repo.GetPOIs().ToList().Select(PointOfInterestDTO.Create);
+            return _poiRepo.GetPOIs().Select(PointOfInterestDTO.Create());
         }
 
         [HttpGet]
         [Route("api/POI/GetPOIsByTour")]
         public IEnumerable<PointOfInterestDTO> GetPOIsByTour(int tourID)
         {
-            return _repo.GetPOIsByTour(tourID).ToList().Select(PointOfInterestDTO.Create);
+            return _poiRepo.GetPOIsByTour(tourID).Select(PointOfInterestDTO.Create());
+        }
+
+        [HttpPost]
+        [Route("api/POI/SetNextPOIAsVisited")]
+        public void SetNextPOIAsVisited(int userID)
+        {
+            var userTour = GetActiveTour(userID);
+            var nextPoi = GetNextPOIInternal(userTour);
+            _userPOIRepo.SetPOIAsVisited(nextPoi.Id, userTour.Id);
+        }
+
+        [HttpGet]
+        [Route("api/POI/GetNextPOI")]
+        public PointOfInterestDTO GetNextPOI(int userID)
+        {
+            var nextPOI = GetNextPOIInternal(userID);
+            return PointOfInterestDTO.Create().Compile()(nextPOI);
         }
 
         [HttpGet]
         [Route("api/POI/GetDistanceToNextPOI")]
         public double GetDistanceToNextPOI(int userID, double latitude, double longitude)
         {
-            POI nextPoi = GetNextPOI(userID);
-            return _repo.GetPOIDistance(nextPoi.Id, latitude, longitude);
-        }
-
-        [HttpGet]
-        [Route("api/POI/IsPOIInRange")]
-        public bool IsPOIInRange(int poiID, double longitude, double latitude, float allowedDistance = 3)
-        {
-            return _repo.GetPOIDistance(poiID, latitude, longitude) <= allowedDistance;
+            POI nextPoi = GetNextPOIInternal(userID);
+            return nextPoi.Coordinates.Distance(CoordinatesHelper.CreatePoint(latitude, longitude)).Value;
         }
 
         [HttpGet]
@@ -67,28 +77,47 @@ namespace TravelBuddy5.Controllers
 
         [HttpGet]
         [Route("api/POI/GetRouteToNextPOI")]
-        public HttpResponseMessage GetRouteToNextPOI(int userId, double currentLatitude, double currentLongitude)
+        public IEnumerable<CoordinateDTO> GetRouteToNextPOI(int userID, double currentLatitude, double currentLongitude)
         {
-            try
-            {
-                var poi = GetNextPOI(userId);
-                IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude,
-                    poi.Coordinates.Latitude.Value,
-                    poi.Coordinates.Longitude.Value);
-                return Request.CreateResponse(HttpStatusCode.OK, route);
-            }
-            catch (Exception ex)
-            {
-                HttpError err = new HttpError(ex.Message);
-                return Request.CreateErrorResponse(HttpStatusCode.Conflict, err);
-            }
+            var poi = GetNextPOIInternal(userID);
+            IEnumerable<CoordinateDTO> route = _geoLocationService.GetRoute(currentLatitude, currentLongitude,
+                poi.Coordinates.Latitude.Value,
+                poi.Coordinates.Longitude.Value);
+            return route;
         }
 
-        private POI GetNextPOI(int userID)
+        private POI GetNextPOIInternal(int userID)
         {
-            var userTour = _userTourRepo.GetActiveTour(userID);
-            var poi = _userPoiRepo.GetNextPOI(userTour).Value.First();
-            return poi;
+            var userTour = GetActiveTour(userID);
+            return GetNextPOIInternal(userTour);
+        }
+
+        private UserTour GetActiveTour(int userID)
+        {
+            UserTour userTour = _userTourRepo.GetActiveTour(userID);
+            if (userTour == null)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent("User doesn't have a started tour")
+                };
+                throw new HttpResponseException(resp);
+            }
+            return userTour;
+        }
+
+        private POI GetNextPOIInternal(UserTour userTour)
+        {
+            POI nextPOI = _userPOIRepo.GetNextPOI(userTour);
+            if (nextPOI == null)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                {
+                    Content = new StringContent("Tour doesn't have remaining POIs")
+                };
+                throw new HttpResponseException(resp);
+            }
+            return nextPOI;
         }
     }
 }

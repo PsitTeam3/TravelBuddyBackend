@@ -21,19 +21,14 @@ namespace TravelBuddy5.Controllers
         [Route("api/Cities/GetCities")]
         public IQueryable<CityDTO> GetCities()
         {
-            return _cityRepo.GetCities().Select(CreateCityDTO());
+            return _cityRepo.GetCities().Select(CityDTO.Create());
         }
 
         [HttpGet]
         [Route("api/Cities/GetCitiesByCountry")]
-        public IQueryable<CityDTO> GetCitiesByCountry(int id)
+        public IQueryable<CityDTO> GetCitiesByCountry(int countryId)
         {
-            return _cityRepo.GetCitiesByCountryId(id).Select(CreateCityDTO());
-        }
-
-        private Expression<Func<City, CityDTO>> CreateCityDTO()
-        {
-            return city => new CityDTO {Id = city.Id, Name = city.Name};
+            return _cityRepo.GetCitiesByCountryId(countryId).Select(CityDTO.Create());
         }
     }
 }
