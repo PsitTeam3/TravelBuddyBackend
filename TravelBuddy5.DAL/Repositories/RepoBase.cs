@@ -2,25 +2,17 @@
 
 namespace TravelBuddy5.DAL.Repositories
 {
-    public class RepoBase : IDisposable
+    public class RepoBase
     {
-
-        private Entities _db;
-        public Entities DB
+        private readonly Entities _db;
+        protected Entities DB
         {
             get { return _db; }
-            set { _db = value; }
         }
 
-        public RepoBase()
+        public RepoBase(Entities db)
         {
-            _db = new Entities();
-        }
-
-        public void Dispose()
-        {
-            _db.SaveChanges();
-            _db.Dispose();
+            _db = db;
         }
     }
 }

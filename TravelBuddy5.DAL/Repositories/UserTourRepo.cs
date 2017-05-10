@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TravelBuddy5.DAL.Interfaces;
-using TravelBuddy5.DAL.Repositories;
 
 namespace TravelBuddy5.DAL.Repositories
 {
     public class UserTourRepo: RepoBase, IUserTourRepo
     {
+        public UserTourRepo(Entities db) : base(db)
+        {
+        }
 
         public void StartUserTour(int userID, int tourID)
         {
@@ -41,12 +42,6 @@ namespace TravelBuddy5.DAL.Repositories
             tour.EndDate = DateTime.Now;
 
             DB.SaveChanges();
-        }
-
-        public bool CheckTourComplete(int userTourId)
-        {
-            var userPOIRepo = new UserPOIRepo();
-            return userPOIRepo.GetNextPOI(userTourId) == null;
         }
 
         public UserTour GetUserTour(int userTour)

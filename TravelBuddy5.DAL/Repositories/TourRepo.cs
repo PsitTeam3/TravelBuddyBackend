@@ -6,6 +6,10 @@ namespace TravelBuddy5.DAL.Repositories
 {
     public class TourRepo: RepoBase, ITourRepo
     {
+        public TourRepo(Entities db) : base(db)
+        {
+        }
+
         public IQueryable<Tour> GetTours()
         {
             return DB.Tour.Include(tour => tour.City).Include(tour => tour.City.Country);

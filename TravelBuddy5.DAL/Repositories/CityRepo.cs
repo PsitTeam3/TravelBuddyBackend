@@ -5,6 +5,10 @@ namespace TravelBuddy5.DAL.Repositories
 {
     public class CityRepo : RepoBase, ICityRepo
     {
+        public CityRepo(Entities db) : base(db)
+        {
+        }
+
         public IQueryable<City> GetCities()
         {
             return DB.City;

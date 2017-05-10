@@ -8,6 +8,10 @@ namespace TravelBuddy5.DAL.Repositories
 {
     public class POIRepo:RepoBase, IPOIRepo
     {
+        public POIRepo(Entities db) : base(db)
+        {
+        }
+
         public IQueryable<POI> GetPOIs()
         {
             return DB.POI;

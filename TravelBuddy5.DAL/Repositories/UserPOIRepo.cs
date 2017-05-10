@@ -9,6 +9,10 @@ namespace TravelBuddy5.DAL.Repositories
 {
     public class UserPOIRepo : RepoBase, IUserPOIRepo
     {
+        public UserPOIRepo(Entities db) : base(db)
+        {
+        }
+
         public void SetPOIAsVisited(int poiID, int userTourID)
         {
             //TODO: Check if POI belongs to tour
@@ -18,13 +22,6 @@ namespace TravelBuddy5.DAL.Repositories
             }
 
             DB.UserPOI.Add(new UserPOI() { Date = DateTime.Now, FK_POI = poiID, FK_UserTour = userTourID });
-        }
-
-        public void SetPOIAsVisited(int poiID, int tourID, int userID)
-        {
-            var userTourRepo = new UserTourRepo();
-            var userTour = userTourRepo.GetUserTour(tourID, userID);
-            SetPOIAsVisited(poiID, userTour.Id);
         }
 
         public POI GetNextPOI(int userTourId)
