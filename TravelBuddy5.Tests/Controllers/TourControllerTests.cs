@@ -11,7 +11,7 @@ using TravelBuddy5.Models;
 namespace TravelBuddy5.Tests.Controllers
 {
     [TestClass]
-    public class TourControllerUnitTest
+    public class TourControllerTests
     {
         private ToursController _target;
         private Mock<ITourRepo> _tourRepoMock;
