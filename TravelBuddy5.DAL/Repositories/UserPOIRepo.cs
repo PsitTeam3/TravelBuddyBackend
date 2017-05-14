@@ -22,6 +22,7 @@ namespace TravelBuddy5.DAL.Repositories
             }
 
             DB.UserPOI.Add(new UserPOI() { Date = DateTime.Now, FK_POI = poiID, FK_UserTour = userTourID });
+            DB.SaveChanges();
         }
 
         public POI GetNextPOI(int userTourId)
