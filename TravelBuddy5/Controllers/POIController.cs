@@ -20,6 +20,13 @@ namespace TravelBuddy5.Controllers
         private readonly IUserPOIRepo _userPOIRepo;
         private readonly IGeoLocationService _geoLocationService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="POIController"/> class.
+        /// </summary>
+        /// <param name="poiRepo">The poi repo.</param>
+        /// <param name="userTourRepo">The user tour repo.</param>
+        /// <param name="userPOIRepo">The user poi repo.</param>
+        /// <param name="geoLocationService">The geo location service.</param>
         public POIController(IPOIRepo poiRepo, IUserTourRepo userTourRepo, IUserPOIRepo userPOIRepo,
             IGeoLocationService geoLocationService)
         {
@@ -29,6 +36,10 @@ namespace TravelBuddy5.Controllers
             _geoLocationService = geoLocationService;
         }
 
+        /// <summary>
+        /// Gets all POIs.
+        /// </summary>
+        /// <returns>Enumerable of all POIs</returns>
         [HttpGet]
         [Route("api/POI/GetPOIs")]
         public IEnumerable<PointOfInterestDTO> GetPOIs()
@@ -36,6 +47,11 @@ namespace TravelBuddy5.Controllers
             return _poiRepo.GetPOIs().Select(PointOfInterestDTO.Create());
         }
 
+        /// <summary>
+        /// Gets the POI by tour.
+        /// </summary>
+        /// <param name="tourID">The tour identifier.</param>
+        /// <returns>Enumerable of all POIs for the given tour</returns>
         [HttpGet]
         [Route("api/POI/GetPOIsByTour")]
         public IEnumerable<PointOfInterestDTO> GetPOIsByTour(int tourID)
@@ -43,6 +59,10 @@ namespace TravelBuddy5.Controllers
             return _poiRepo.GetPOIsByTour(tourID).Select(PointOfInterestDTO.Create());
         }
 
+        /// <summary>
+        /// Sets the next POI as visited.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
         [HttpPost]
         [Route("api/POI/SetNextPOIAsVisited")]
         public void SetNextPOIAsVisited(int userID)
@@ -52,6 +72,11 @@ namespace TravelBuddy5.Controllers
             _userPOIRepo.SetPOIAsVisited(nextPoi.Id, userTour.Id);
         }
 
+        /// <summary>
+        /// Gets the next POI.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <returns>The next POI object</returns>
         [HttpGet]
         [Route("api/POI/GetNextPOI")]
         public PointOfInterestDTO GetNextPOI(int userID)
@@ -60,6 +85,13 @@ namespace TravelBuddy5.Controllers
             return PointOfInterestDTO.Create().Compile()(nextPOI);
         }
 
+        /// <summary>
+        /// Calculates the distance to next POI in the current started tour for the given user.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="latitude">The latitude.</param>
+        /// <param name="longitude">The longitude.</param>
+        /// <returns>Distance to the next POI in the current started tour for the given user</returns>
         [HttpGet]
         [Route("api/POI/GetDistanceToNextPOI")]
         public double GetDistanceToNextPOI(int userID, double latitude, double longitude)
@@ -68,6 +100,16 @@ namespace TravelBuddy5.Controllers
             return nextPoi.Coordinates.Distance(CoordinatesHelper.CreatePoint(latitude, longitude)).Value;
         }
 
+        /// <summary>
+        /// Determines whether the next POI is in Range.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="longitude">The longitude.</param>
+        /// <param name="latitude">The latitude.</param>
+        /// <param name="allowedDistance">The allowed distance (optional).</param>
+        /// <returns>
+        ///   <c>true</c> if next POI is in range; otherwise, <c>false</c>.
+        /// </returns>
         [HttpGet]
         [Route("api/POI/IsNextPOIInRange")]
         public bool IsNextPOIInRange(int userID, double longitude, double latitude, float allowedDistance = 3)
@@ -75,6 +117,13 @@ namespace TravelBuddy5.Controllers
             return GetDistanceToNextPOI(userID, latitude, longitude) <= allowedDistance;
         }
 
+        /// <summary>
+        /// Gets the route to next poi.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="currentLatitude">The current latitude.</param>
+        /// <param name="currentLongitude">The current longitude.</param>
+        /// <returns>Enumerable of all waypoint coordinates to the next POI using the google maps API</returns>
         [HttpGet]
         [Route("api/POI/GetRouteToNextPOI")]
         public IEnumerable<CoordinateDTO> GetRouteToNextPOI(int userID, double currentLatitude, double currentLongitude)

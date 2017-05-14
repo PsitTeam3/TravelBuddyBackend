@@ -11,11 +11,19 @@ namespace TravelBuddy5.Controllers
     {
         private readonly ITourRepo _tourRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToursController"/> class.
+        /// </summary>
+        /// <param name="tourRepo">The tour repo.</param>
         public ToursController(ITourRepo tourRepo)
         {
             _tourRepo = tourRepo;
         }
 
+        /// <summary>
+        /// Gets all tours.
+        /// </summary>
+        /// <returns>Enumerable for all tours</returns>
         [HttpGet]
         [Route("api/Tours/GetTours")]
         public IQueryable<TourDTO> GetTours()
@@ -23,6 +31,11 @@ namespace TravelBuddy5.Controllers
             return _tourRepo.GetTours().Select(TourDTO.Create());
         }
 
+        /// <summary>
+        /// Gets all tours by city.
+        /// </summary>
+        /// <param name="cityID">The city identifier.</param>
+        /// <returns>Enumerable for all tours in the given city</returns>
         [HttpGet]
         [Route("api/Tours/GetToursByCity")]
         public IQueryable<TourDTO> GetToursByCity(int cityID)

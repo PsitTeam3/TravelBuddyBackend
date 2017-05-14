@@ -64,7 +64,7 @@ namespace TravelBuddy5.App_Start
         }
 
         /// <summary>
-        /// Load your modules or register your services here!
+        /// Loads all modules or register needed to be injected
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)

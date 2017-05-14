@@ -9,10 +9,20 @@ namespace TravelBuddy5.DAL.Repositories
 {
     public class UserPOIRepo : RepoBase, IUserPOIRepo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserPOIRepo"/> class.
+        /// </summary>
+        /// <param name="db">The database.</param>
         public UserPOIRepo(Entities db) : base(db)
         {
         }
 
+        /// <summary>
+        /// Sets the poi as visited.
+        /// </summary>
+        /// <param name="poiID">The poi identifier.</param>
+        /// <param name="userTourID">The user tour identifier.</param>
+        /// <exception cref="System.Exception">POI already checked</exception>
         public void SetPOIAsVisited(int poiID, int userTourID)
         {
             //TODO: Check if POI belongs to tour
@@ -24,12 +34,22 @@ namespace TravelBuddy5.DAL.Repositories
             DB.UserPOI.Add(new UserPOI() { Date = DateTime.Now, FK_POI = poiID, FK_UserTour = userTourID });
         }
 
+        /// <summary>
+        /// Gets the next poi.
+        /// </summary>
+        /// <param name="userTourId">The user tour identifier.</param>
+        /// <returns></returns>
         public POI GetNextPOI(int userTourId)
         {
             var usertour = DB.UserTour.FirstOrDefault(t => t.Id == userTourId);
             return GetNextPOI(usertour);
         }
 
+        /// <summary>
+        /// Gets the next poi.
+        /// </summary>
+        /// <param name="usertour">The usertour.</param>
+        /// <returns></returns>
         public POI GetNextPOI(UserTour usertour)
         {
             //Get TourPOIs for tour and for all UserPOIs

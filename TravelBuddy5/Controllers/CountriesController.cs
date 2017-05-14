@@ -9,11 +9,19 @@ namespace TravelBuddy5.Controllers
     {
         private readonly ICountryRepo _countryRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CountriesController"/> class.
+        /// </summary>
+        /// <param name="countryRepo">The country repo.</param>
         public CountriesController(ICountryRepo countryRepo)
         {
             _countryRepo = countryRepo;
         }
 
+        /// <summary>
+        /// Gets all countries.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Countries/GetCountries")]
         // GET: api/Countries

@@ -10,6 +10,10 @@ namespace TravelBuddy5
 {
     public static class WebApiConfig
     {
+        /// <summary>
+        /// Register routing configuration.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
