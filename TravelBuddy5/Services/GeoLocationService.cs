@@ -12,6 +12,14 @@ namespace TravelBuddy5.Services
 {
     public class GeoLocationService : IGeoLocationService
     {
+        /// <summary>
+        /// Gets the route from one point to another by latitude and longitude.
+        /// </summary>
+        /// <param name="originLatitude">The origin latitude.</param>
+        /// <param name="originLongitude">The origin longitude.</param>
+        /// <param name="destinationLatitude">The destination latitude.</param>
+        /// <param name="destinationLongitude">The destination longitude.</param>
+        /// <returns></returns>
         public IEnumerable<CoordinateDTO> GetRoute(double originLatitude, double originLongitude, double destinationLatitude,
             double destinationLongitude)
         {

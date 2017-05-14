@@ -19,6 +19,12 @@ namespace TravelBuddy5.Controllers
         private readonly IUserPOIRepo _userPOIRepo;
         private readonly IGeoLocationService _geoLocationService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserTourController"/> class.
+        /// </summary>
+        /// <param name="userTourRepo">The user tour repo.</param>
+        /// <param name="userPOIRepo">The user poi repo.</param>
+        /// <param name="geoLocationService">The geo location service.</param>
         public UserTourController(IUserTourRepo userTourRepo, IUserPOIRepo userPOIRepo, IGeoLocationService geoLocationService)
         {
             _userTourRepo = userTourRepo;
@@ -26,6 +32,14 @@ namespace TravelBuddy5.Controllers
             _geoLocationService = geoLocationService;
         }
 
+        /// <summary>
+        /// Starts the user tour.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="tourID">The tour identifier.</param>
+        /// <param name="currentLatitude">The current latitude.</param>
+        /// <param name="currentLongitude">The current longitude.</param>
+        /// <returns>The route (all waypoints) and all POIs to the target</returns>
         [HttpPost]
         [Route("api/UserTour/StartUserTour")]
         public RouteToPointOfInterestDTO StartUserTour(int userID, int tourID, double currentLatitude, double currentLongitude)
@@ -53,6 +67,10 @@ namespace TravelBuddy5.Controllers
             }
         }
 
+        /// <summary>
+        /// Ends the user tour.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
         [HttpPost]
         [Route("api/UserTour/EndUserTour")]
         public void EndUserTour(int userID)
@@ -79,6 +97,11 @@ namespace TravelBuddy5.Controllers
             throw new HttpResponseException(resp);
         }
 
+        /// <summary>
+        /// Gets the active tour.
+        /// </summary>
+        /// <param name="userID">The user identifier.</param>
+        /// <returns>The active tour by the given user</returns>
         [HttpGet]
         [Route("api/UserTour/GetActiveTour")]
         public UserTourDTO GetActiveTour(int userID)

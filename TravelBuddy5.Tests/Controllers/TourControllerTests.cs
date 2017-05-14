@@ -42,6 +42,9 @@ namespace TravelBuddy5.Tests.Controllers
             _tours = new List<Tour>() {_tour1, tour2};
         }
 
+        /// <summary>
+        /// Tests the that all tours are returned.
+        /// </summary>
         [TestMethod]
         public void TestThatAllToursAreReturned()
         {
@@ -50,6 +53,9 @@ namespace TravelBuddy5.Tests.Controllers
             Assert.AreEqual(2, tourDTOs.Count());
         }
 
+        /// <summary>
+        /// Tests the that correct tours by city are returned.
+        /// </summary>
         [TestMethod]
         public void TestThatCorrectToursByCityAreReturned()
         {
@@ -58,6 +64,9 @@ namespace TravelBuddy5.Tests.Controllers
             Assert.AreEqual(2, tourDTOs.Count());
         }
 
+        /// <summary>
+        /// Test the that dto contains correct data.
+        /// </summary>
         [TestMethod]
         public void TestThatDTOContainsCorrectData()
         {

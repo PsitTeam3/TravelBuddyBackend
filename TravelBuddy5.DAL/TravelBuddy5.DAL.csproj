@@ -110,7 +110,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
     <None Include="DAL.cd" />
     <None Include="packages.config" />
     <EntityDeploy Include="TravelBuddyEntities.edmx">

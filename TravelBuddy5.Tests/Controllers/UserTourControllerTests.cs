@@ -30,6 +30,9 @@ namespace TravelBuddy5.Tests.Controllers
             _target = new UserTourController(_userTourRepoMock.Object, _userPoiRepoMock.Object, _geoLocationServiceMock.Object);
         }
 
+        /// <summary>
+        /// Tests the that tour gets started correctly.
+        /// </summary>
         [TestMethod]
         public void TestThatTourGetsStartedCorrectly()
         {
@@ -68,6 +71,9 @@ namespace TravelBuddy5.Tests.Controllers
             Assert.AreEqual(40.0, routeToPointOfInterestDto.RouteToNextPOI.ElementAt(1).Longitude, 0.1);
         }
 
+        /// <summary>
+        /// Tests the that exception is thrown when tour is started and user has already an active tour.
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(HttpResponseException))]
         public void TestThatExceptionIsThrownWhenTourIsStartedAndUserHasAlreadyAnActiveTour()
@@ -76,6 +82,9 @@ namespace TravelBuddy5.Tests.Controllers
             _target.StartUserTour(1, 2, 34, 59);
         }
 
+        /// <summary>
+        /// Tests the that tour is correctly ended.
+        /// </summary>
         [TestMethod]
         public void TestThatTourIsCorrectlyEnded()
         {
@@ -85,6 +94,9 @@ namespace TravelBuddy5.Tests.Controllers
             _userTourRepoMock.Verify(m => m.EndUserTour(1), Times.Once());
         }
 
+        /// <summary>
+        /// Tests the that exception is thrown when tour gets ended but user has no active tour.
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(HttpResponseException))]
         public void TestThatExceptionIsThrownWhenTourGetsEndedButUserHasNoActiveTour()

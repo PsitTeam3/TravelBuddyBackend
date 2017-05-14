@@ -10,6 +10,9 @@ namespace TravelBuddy5
 {
     public class SwaggerConfig
     {
+        /// <summary>
+        /// Registers a configured swagger instance.
+        /// </summary>
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;

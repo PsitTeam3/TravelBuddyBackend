@@ -14,6 +14,10 @@ namespace TravelBuddy5.IoC
 
         IResolutionRoot _resolver;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectDependencyScope"/> class.
+        /// </summary>
+        /// <param name="resolver">The ninject resolver.</param>
         public NinjectDependencyScope(IResolutionRoot resolver)
         {
             _resolver = resolver;
@@ -26,8 +30,16 @@ namespace TravelBuddy5.IoC
                 disposable.Dispose();
 
             _resolver = null;
-        }   
+        }
 
+        /// <summary>
+        /// Retrieves a service from the scope.
+        /// </summary>
+        /// <param name="serviceType">The service to be retrieved.</param>
+        /// <returns>
+        /// The retrieved service.
+        /// </returns>
+        /// <exception cref="System.ObjectDisposedException">this - This scope has been disposed</exception>
         public object GetService(Type serviceType)
         {
             if (_resolver == null)
@@ -36,6 +48,14 @@ namespace TravelBuddy5.IoC
             return _resolver.TryGet(serviceType);
         }
 
+        /// <summary>
+        /// Retrieves a collection of services from the scope.
+        /// </summary>
+        /// <param name="serviceType">The collection of services to be retrieved.</param>
+        /// <returns>
+        /// The retrieved collection of services.
+        /// </returns>
+        /// <exception cref="System.ObjectDisposedException">this - This scope has been disposed</exception>
         public IEnumerable<object> GetServices(Type serviceType)
         {
             if (_resolver == null)
@@ -49,11 +69,21 @@ namespace TravelBuddy5.IoC
     {
         IKernel kernel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectDependencyResolver"/> class.
+        /// </summary>
+        /// <param name="kernel">The kernel.</param>
         public NinjectDependencyResolver(IKernel kernel) : base(kernel)
         {
             this.kernel = kernel;
         }
 
+        /// <summary>
+        /// Starts a resolution scope.
+        /// </summary>
+        /// <returns>
+        /// The dependency scope.
+        /// </returns>
         public IDependencyScope BeginScope()
         {
             return new NinjectDependencyScope(kernel.BeginBlock());

@@ -43,7 +43,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAAAIACAAAA=</HashCode>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIACAAAA=</HashCode>
       <FileName>Repositories\POIRepo.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -51,16 +51,8 @@
   <Class Name="TravelBuddy5.DAL.Repositories.RepoBase" Collapsed="true">
     <Position X="6" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Repositories\RepoBase.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="TravelBuddy5.DAL.Repositories.RepoObject&lt;T&gt;">
-    <Position X="12.75" Y="0.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAgIAAAAAA=</HashCode>
-      <FileName>Repositories\RepoObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TravelBuddy5.DAL.Repositories.TourRepo">
@@ -106,7 +98,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAQAEAAgAAEAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAQAAAAgAAEAAAAAAA=</HashCode>
       <FileName>Repositories\UserTourRepo.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -118,42 +110,42 @@
       <FileName>CoordinatesHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="TravelBuddy5.DAL.Interfaces.ICityRepo" Collapsed="true">
+  <Interface Name="TravelBuddy5.DAL.Interfaces.ICityRepo">
     <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ICityRepo.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TravelBuddy5.DAL.Interfaces.ICountryRepo" Collapsed="true">
+  <Interface Name="TravelBuddy5.DAL.Interfaces.ICountryRepo">
     <Position X="4.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Interfaces\ICountryRepo.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TravelBuddy5.DAL.Interfaces.IPOIRepo" Collapsed="true">
+  <Interface Name="TravelBuddy5.DAL.Interfaces.IPOIRepo">
     <Position X="6.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAAAIACAAAA=</HashCode>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIACAAAA=</HashCode>
       <FileName>Interfaces\IPOIRepo.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TravelBuddy5.DAL.Interfaces.ITourRepo" Collapsed="true">
+  <Interface Name="TravelBuddy5.DAL.Interfaces.ITourRepo">
     <Position X="2.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ITourRepo.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TravelBuddy5.DAL.Interfaces.IUserPOIRepo" Collapsed="true">
+  <Interface Name="TravelBuddy5.DAL.Interfaces.IUserPOIRepo">
     <Position X="10.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Interfaces\IUserPOIRepo.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="TravelBuddy5.DAL.Interfaces.IUserTourRepo" Collapsed="true">
+  <Interface Name="TravelBuddy5.DAL.Interfaces.IUserTourRepo">
     <Position X="8.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAQAAAAgAAEAAAAAAA=</HashCode>
