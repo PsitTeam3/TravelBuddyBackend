@@ -69,7 +69,6 @@ namespace TravelBuddy5.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ITestRepo>().To<TestRepo>();
             kernel.Bind<ITourRepo>().To<TourRepo>();
             kernel.Bind<ICityRepo>().To<CityRepo>();
             kernel.Bind<ICountryRepo>().To<CountryRepo>();
